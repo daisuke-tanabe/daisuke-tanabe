@@ -1,5 +1,7 @@
 ### Hi there 👋
 
+<img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/rainbow-bird-dancing.gif" width="80" alt="" />
+
 <!--
 **daisuke-tanabe/daisuke-tanabe** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
