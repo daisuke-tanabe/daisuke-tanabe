@@ -17,10 +17,6 @@ Here are some ideas to get you started:
 
 ## Stats <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/rainbow-bird-dancing.gif" width="32" alt="" />
 ![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=github)
-![](http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=daisuke-tanabe&theme=github)
-![](http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=daisuke-tanabe&theme=github)
-![](http://github-profile-summary-cards.vercel.app/api/cards/stats?username=daisuke-tanabe&theme=github)
-![](http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=daisuke-tanabe&theme=github&utcOffset=9)
 
 ## Trophy <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/rainbow-bird-dancing.gif" width="32" alt="" />
 ![trophy](https://github-profile-trophy.vercel.app/?username=daisuke-tanabe&theme=github)
