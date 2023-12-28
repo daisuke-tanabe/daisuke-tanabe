@@ -1,4 +1,4 @@
-## Hi there <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/rainbow-bird-dancing.gif" width="32" alt="" />
+### Hi there
 
 <!--
 **daisuke-tanabe/daisuke-tanabe** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
@@ -15,12 +15,12 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-## Stats
+## Stats <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/rainbow-bird-dancing.gif" width="24" alt="" />
 ![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=github)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=daisuke-tanabe&theme=github)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=daisuke-tanabe&theme=github)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/stats?username=daisuke-tanabe&theme=github)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=daisuke-tanabe&theme=github&utcOffset=9)
 
-## Trophy
+## Trophy <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/rainbow-bird-dancing.gif" width="24" alt="" />
 ![trophy](https://github-profile-trophy.vercel.app/?username=daisuke-tanabe&theme=github)
