@@ -15,16 +15,6 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-<p align="left">
-  <a href="https://github.com/daisuke-tanabe">
-    <img height="20" src="https://komarev.com/ghpvc/?username=daisuke-tanabe" />
-  </a>
-  <a href="https://github.com/daisuke-tanabe">
-    <img height="20" src="https://img.shields.io/github/followers/daisuke-tanabe?label=follow&logo=github&style=flat" />
-  </a>
-</p>
-
-
 ## Stats
 ![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=github)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=daisuke-tanabe&theme=github)
