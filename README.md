@@ -23,3 +23,13 @@ Here are some ideas to get you started:
     <img height="20" src="https://img.shields.io/github/followers/daisuke-tanabe?label=follow&logo=github&style=flat" />
   </a>
 </p>
+
+## Stats
+![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=gruvbox)
+![](http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=daisuke-tanabe&theme=gruvbox)
+![](http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=daisuke-tanabe&theme=gruvbox)
+![](http://github-profile-summary-cards.vercel.app/api/cards/stats?username=daisuke-tanabe&theme=gruvbox)
+![](http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=daisuke-tanabe&theme=gruvbox&utcOffset=9)
+
+## Trophy
+![trophy](https://github-profile-trophy.vercel.app/?username=daisuke-tanabe&theme=gruvbox)
