@@ -24,8 +24,6 @@ Here are some ideas to get you started:
   </a>
 </p>
 
-## Trophy
-![trophy](https://github-profile-trophy.vercel.app/?username=daisuke-tanabe&theme=gruvbox)
 
 ## Stats
 ![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=github)
@@ -33,3 +31,6 @@ Here are some ideas to get you started:
 ![](http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=daisuke-tanabe&theme=github)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/stats?username=daisuke-tanabe&theme=github)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=daisuke-tanabe&theme=github&utcOffset=9)
+
+## Trophy
+![trophy](https://github-profile-trophy.vercel.app/?username=daisuke-tanabe&theme=github)
