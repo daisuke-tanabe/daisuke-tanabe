@@ -1,8 +1,11 @@
 <div align="center">
+  <img width="100%" src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/warmth-frogapples.gif" />
+</div>
 
-[![](https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/warmth-frogapples.gif)](https://github.com/daisuke-tanabe)
-Background GIF by [frogapples](https://www.pinterest.jp/pin/69665125477822593/) on [Pinterest](https://www.pinterest.com/).
+<p align="right">Background GIF by <a href="https://www.pinterest.jp/pin/69665125477822593/" target"_blank">frogapples</a> on <a href="https://www.pinterest.com/" target="_blank">Pinterest</a>.</p>
 
+<div align="center">
+  
 ## <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" height="30" /> My Stats <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" height="30" />
 
 <div>
