@@ -6,14 +6,14 @@
   
 ## 🖥 My Stats
 <div>
-    <img height=150 alt="GitHub Stats" src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=github" />&nbsp;&nbsp;
-    <img height=150 alt="Most Used Languages" src="https://github-readme-stats.vercel.app/api/top-langs?username=daisuke-tanabe&layout=compact&theme=github" />&nbsp;&nbsp;
+  <img height="170" alt="GitHub Stats" src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=github" />&nbsp;  
+  <img height="170" alt="Most Used Languages" src="https://github-readme-stats.vercel.app/api/top-langs?username=daisuke-tanabe&layout=compact&theme=github" />
 </div>
 
 ## 🏆 Trophy
 
 <div>
-  <img height="100" alt="GitHub Stats" src="https://github-profile-trophy.vercel.app/?username=daisuke-tanabe&theme=github" />
+  <img alt="GitHub Stats" src="https://github-profile-trophy.vercel.app/?username=daisuke-tanabe&theme=github" />
 </div>
 
 </div>
