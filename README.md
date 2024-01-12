@@ -6,8 +6,7 @@
   
 ## 🖥 My Stats
 <div>
-  <img height="158" alt="GitHub Stats" src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=github" />
-  &thinsp;  
+  <img height="158" alt="GitHub Stats" src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=github" />&thinsp;  
   <img height="158" alt="Most Used Languages" src="https://github-readme-stats.vercel.app/api/top-langs?username=daisuke-tanabe&layout=compact&theme=github" />
 </div>
 
