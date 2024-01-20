@@ -6,13 +6,13 @@
 
 <div align="center">
   
-## <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" height="30" /> My Stats <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" height="30" />
+## <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" width="30" height="30" /> My Stats <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" width="30" height="30" />
 
 <div>
   <img alt="GitHub Stats" src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=daisuke-tanabe&theme=onedark" />
 </div>
 
-## <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" height="30" /> Trophy <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" height="30" />
+## <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" width="30" height="30" /> Trophy <img src="https://github.com/daisuke-tanabe/daisuke-tanabe/blob/main/parrot.gif" width="30" height="30" />
 
 <div>
   <img alt="GitHub Stats" src="https://github-profile-trophy.vercel.app/?username=daisuke-tanabe&theme=onedark&no-frame=true&margin-w=5" />
