@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
+import { ThemeProvider } from '@/providers';
+
 import '@/styles/globals.css';
 import localFont from 'next/font/local';
+import { Layout } from '@/app/_layout/Layout';
 
 const pixelMplus = localFont({
   src: '../fonts/PixelMplus10-Regular.ttf',
@@ -20,20 +23,15 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.png" sizes="any" />
       </head>
 
       <body className={`${pixelMplus.className}`}>
-        <div className="grid mx-auto p-8 max-w-3xl w-auto h-full grid-rows-[auto_1fr_auto] h-screen">
-          <header>
-            <h1 className="text-2xl tracking-wide">Daisuke&thinsp;Tanabe</h1>
-            <p className="text-xs tracking-wide">I&apos;m a Web Frontend Engineer</p>
-          </header>
-
-          <main>{children}</main>
-        </div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Layout>{children}</Layout>
+        </ThemeProvider>
       </body>
     </html>
   );
