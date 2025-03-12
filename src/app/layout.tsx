@@ -1,7 +1,13 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
-import './globals.css';
+import '@/styles/globals.css';
+import localFont from 'next/font/local';
+
+const pixelMplus = localFont({
+  src: '../fonts/PixelMplus10-Regular.ttf',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,8 +20,21 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="ja">
+      <head>
+        <link rel="icon" href="/favicon.png" sizes="any" />
+      </head>
+
+      <body className={`${pixelMplus.className}`}>
+        <div className="grid mx-auto p-8 max-w-3xl w-auto h-full grid-rows-[auto_1fr_auto] h-screen">
+          <header>
+            <h1 className="text-2xl tracking-wide">Daisuke&thinsp;Tanabe</h1>
+            <p className="text-xs tracking-wide">I&apos;m a Web Frontend Engineer</p>
+          </header>
+
+          <main>{children}</main>
+        </div>
+      </body>
     </html>
   );
 }
