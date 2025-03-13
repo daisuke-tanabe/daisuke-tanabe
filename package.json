@@ -8,9 +8,11 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json,md}\"",
     "lint": "turbo lint"
   },
   "devDependencies": {
+    "prettier": "3.5.3",
     "turbo": "2.4.4"
   }
 }
