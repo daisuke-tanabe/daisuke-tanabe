@@ -1,8 +1,9 @@
+import { FlatCompat } from '@eslint/eslintrc';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
+import typeScriptESLintParser from '@typescript-eslint/parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,8 +14,10 @@ const compat = new FlatCompat({
 
 export default tseslint.config(
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
+
   {
     languageOptions: {
+      parser: typeScriptESLintParser,
       parserOptions: {
         projectService: true,
         tsconfigRootDir: __dirname,
