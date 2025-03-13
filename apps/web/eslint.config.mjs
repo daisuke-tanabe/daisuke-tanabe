@@ -1,4 +1,5 @@
 import { FlatCompat } from '@eslint/eslintrc';
+import eslint from "@eslint/js"
 import eslintConfigPrettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 import typeScriptESLintParser from '@typescript-eslint/parser';
@@ -13,8 +14,6 @@ const compat = new FlatCompat({
 });
 
 export default tseslint.config(
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-
   {
     languageOptions: {
       parser: typeScriptESLintParser,
@@ -23,6 +22,12 @@ export default tseslint.config(
         tsconfigRootDir: __dirname,
       },
     },
+    extends: [
+      eslint.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
+      tseslint.configs.stylisticTypeChecked,
+      ...compat.extends('next/core-web-vitals', 'next/typescript'),
+    ],
     rules: {
       // https://eslint.org/docs/latest/rules/no-unused-vars
       'no-unused-vars': 'off',
@@ -88,11 +93,6 @@ export default tseslint.config(
       // https://typescript-eslint.io/rules/require-await/
       '@typescript-eslint/require-await': 'error',
     },
-  },
-
-  {
-    files: ['**/*.{js,mjs}'],
-    extends: [tseslint.configs.disableTypeChecked],
   },
 
   eslintConfigPrettier,
