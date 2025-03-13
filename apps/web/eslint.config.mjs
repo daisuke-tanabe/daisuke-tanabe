@@ -1,5 +1,5 @@
 import { FlatCompat } from '@eslint/eslintrc';
-import eslint from "@eslint/js"
+import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 import typeScriptESLintParser from '@typescript-eslint/parser';
