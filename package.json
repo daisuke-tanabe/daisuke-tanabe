@@ -7,6 +7,7 @@
   },
   "scripts": {
     "build": "turbo build",
+    "check-types": "turbo check-types",
     "dev": "turbo dev",
     "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json,md}\"",
     "lint": "turbo lint"
@@ -14,6 +15,7 @@
   "devDependencies": {
     "eslint": "9.22.0",
     "prettier": "3.5.3",
-    "turbo": "2.4.4"
+    "turbo": "2.4.4",
+    "typescript": "5.8.2"
   }
 }
