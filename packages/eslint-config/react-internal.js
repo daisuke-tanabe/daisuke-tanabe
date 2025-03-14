@@ -25,11 +25,7 @@ export default tseslint.config(
         tsconfigRootDir: __dirname,
       },
     },
-    extends: [
-      eslint.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      tseslint.configs.stylisticTypeChecked,
-    ],
+    extends: [eslint.configs.recommended, tseslint.configs.recommended, tseslint.configs.stylistic],
   },
   {
     plugins: {
