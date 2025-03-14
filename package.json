@@ -10,7 +10,8 @@
     "check-types": "turbo check-types",
     "dev": "turbo dev",
     "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json,md}\"",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "test": "turbo test"
   },
   "devDependencies": {
     "eslint": "9.22.0",

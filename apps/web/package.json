@@ -7,7 +7,7 @@
     "dev": "next dev --turbopack",
     "lint": "next lint",
     "start": "next start",
-    "test": "jest --silent"
+    "test": "jest --passWithNoTests --silent"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "2.1.6",
