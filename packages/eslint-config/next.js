@@ -6,7 +6,7 @@ import typeScriptESLintParser from '@typescript-eslint/parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import { baseConfig } from './base.js';
+import turboPlugin from "eslint-plugin-turbo";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,7 +16,6 @@ const compat = new FlatCompat({
 });
 
 export default tseslint.config(
-  ...baseConfig,
   {
     languageOptions: {
       parser: typeScriptESLintParser,
@@ -31,7 +30,36 @@ export default tseslint.config(
       tseslint.configs.stylisticTypeChecked,
       ...compat.extends('next/core-web-vitals', 'next/typescript'),
     ],
+    plugins: {
+      turbo: turboPlugin,
+    },
     rules: {
+      // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'object', 'type'],
+          pathGroups: [
+            {
+              pattern: '@/**',
+              group: 'parent',
+              position: 'before',
+            },
+          ],
+          pathGroupsExcludedImportTypes: [
+            'builtin',
+            'external',
+            'object',
+            'type',
+          ],
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+          'newlines-between': 'always',
+        },
+      ],
+
       // https://eslint.org/docs/latest/rules/no-unused-vars
       'no-unused-vars': 'off',
 
@@ -45,6 +73,9 @@ export default tseslint.config(
 
       // https://eslint.org/docs/latest/rules/require-await
       'require-await': 'off',
+
+      // https://github.com/vercel/turborepo/blob/main/packages/eslint-plugin-turbo/docs/rules/no-undeclared-env-vars.md
+      'turbo/no-undeclared-env-vars': 'warn',
 
       // https://typescript-eslint.io/rules/consistent-indexed-object-style/
       '@typescript-eslint/consistent-indexed-object-style': 'off',
