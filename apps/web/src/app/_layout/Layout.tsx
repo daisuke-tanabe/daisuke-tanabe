@@ -1,7 +1,7 @@
-import { ModeToggle } from './ModeToggle';
+import NextLink from 'next/link';
 import { ReactNode } from 'react';
 
-import NextLink from 'next/link';
+import { ModeToggle } from './ModeToggle';
 
 type LayoutProps = Readonly<{
   children: ReactNode;

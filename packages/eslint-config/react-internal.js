@@ -1,15 +1,15 @@
 import eslint from '@eslint/js';
-import eslintConfigPrettier from "eslint-config-prettier"
-import reactPlugin from "eslint-plugin-react"
+import eslintConfigPrettier from 'eslint-config-prettier';
+import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import typeScriptESLintParser from '@typescript-eslint/parser';
 
-import tseslint from "typescript-eslint"
+import tseslint from 'typescript-eslint';
 
-import {fileURLToPath} from "url";
-import {dirname} from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-import { baseConfig } from "./base.js"
+import { baseConfig } from './base.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -38,8 +38,8 @@ export default tseslint.config(
     },
     settings: {
       react: {
-        version: 'detect'
-      }
+        version: 'detect',
+      },
     },
     rules: {
       ...reactHooks.configs.recommended.rules,

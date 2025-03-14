@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+import localFont from 'next/font/local';
 import { ReactNode } from 'react';
 
+import { Layout } from '@/app/_layout/Layout';
 import { ThemeProvider } from '@/providers';
 
+import type { Metadata } from 'next';
+
 import '@workspace/ui/globals.css';
-import localFont from 'next/font/local';
-import { Layout } from '@/app/_layout/Layout';
 
 const pixelMplus = localFont({
   src: '../fonts/PixelMplus10-Regular.ttf',

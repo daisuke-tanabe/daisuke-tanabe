@@ -11,6 +11,7 @@
     "dev": "turbo dev",
     "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json,md}\"",
     "lint": "turbo lint",
+    "lint-fix": "turbo lint-fix",
     "test": "turbo test"
   },
   "devDependencies": {

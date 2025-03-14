@@ -6,7 +6,7 @@ import typeScriptESLintParser from '@typescript-eslint/parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import { baseConfig } from "./base.js"
+import { baseConfig } from './base.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
