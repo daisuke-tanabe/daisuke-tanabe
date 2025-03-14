@@ -6,7 +6,7 @@ import typeScriptESLintParser from '@typescript-eslint/parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import turboPlugin from "eslint-plugin-turbo";
+import turboPlugin from 'eslint-plugin-turbo';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -46,12 +46,7 @@ export default tseslint.config(
               position: 'before',
             },
           ],
-          pathGroupsExcludedImportTypes: [
-            'builtin',
-            'external',
-            'object',
-            'type',
-          ],
+          pathGroupsExcludedImportTypes: ['builtin', 'external', 'object', 'type'],
           alphabetize: {
             order: 'asc',
             caseInsensitive: true,
