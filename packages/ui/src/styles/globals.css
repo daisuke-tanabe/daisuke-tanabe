@@ -1,4 +1,4 @@
-@import "../../node_modules/tailwindcss";
+@import "../../../../apps/web/node_modules/tailwindcss";
 
 @plugin "tailwindcss-animate";
 

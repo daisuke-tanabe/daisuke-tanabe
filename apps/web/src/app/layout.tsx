@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 import { ThemeProvider } from '@/providers';
 
-import '@/styles/globals.css';
+import '@workspace/ui/globals.css';
 import localFont from 'next/font/local';
 import { Layout } from '@/app/_layout/Layout';
 

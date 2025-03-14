@@ -1,22 +1,13 @@
 {
-  "name": "web",
+  "name": "@workspace/ui",
   "version": "0.0.1",
-  "scripts": {
-    "build": "next build",
-    "check-types": "tsc --noEmit",
-    "dev": "next dev --turbopack",
-    "lint": "next lint",
-    "start": "next start",
-    "test": "jest --passWithNoTests --silent"
-  },
+  "type": "module",
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "2.1.6",
     "@radix-ui/react-slot": "1.1.2",
-    "@workspace/ui": "workspace:*",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "0.479.0",
-    "next": "15.2.2",
     "next-themes": "0.4.6",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -25,17 +16,17 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.0.14",
-    "@testing-library/dom": "10.4.0",
-    "@testing-library/jest-dom": "6.6.3",
-    "@testing-library/react": "16.2.0",
     "@types/node": "22.13.10",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "jest": "29.7.0",
-    "jest-environment-jsdom": "29.7.0",
-    "tailwindcss": "4.0.14",
-    "ts-node": "10.9.2"
+    "tailwindcss": "4.0.14"
+  },
+  "exports": {
+    "./globals.css": "./src/styles/globals.css",
+    "./postcss.config": "./postcss.config.mjs",
+    "./components": "./src/components/index.ts",
+    "./lib/*": "./src/lib/*.ts"
   }
 }
