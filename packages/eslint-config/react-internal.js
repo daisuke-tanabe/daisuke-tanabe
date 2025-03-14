@@ -9,13 +9,15 @@ import tseslint from "typescript-eslint"
 import {fileURLToPath} from "url";
 import {dirname} from "path";
 
+import { baseConfig } from "./base.js"
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default tseslint.config(
+  ...baseConfig,
   {
-    ...
-      reactPlugin.configs.flat.recommended,
+    ...reactPlugin.configs.flat.recommended,
     languageOptions: {
       ...reactPlugin.configs.flat.recommended.languageOptions,
       parser: typeScriptESLintParser,
