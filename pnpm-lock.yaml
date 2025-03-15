@@ -47,6 +47,9 @@ importers:
       next-themes:
         specifier: 0.4.6
         version: 0.4.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      obelisk.js:
+        specifier: 1.2.2
+        version: 1.2.2
       react:
         specifier: 19.0.0
         version: 19.0.0
@@ -2745,6 +2748,9 @@ packages:
 
   nwsapi@2.2.18:
     resolution: {integrity: sha512-p1TRH/edngVEHVbwqWnxUViEmq5znDvyB+Sik5cmuLpGOIfDf/39zLiq3swPF8Vakqn+gvNiOQAZu8djYlQILA==}
+
+  obelisk.js@1.2.2:
+    resolution: {integrity: sha512-Q9YGidW6RTOFjWkFFeHhIPaiDfhstlTulgyc+k2AZF0YRDo+cT1hCuiUR4jHoeWV3NK+cJSXlANBz7H/daOrSA==}
 
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
@@ -6486,6 +6492,8 @@ snapshots:
       path-key: 3.1.1
 
   nwsapi@2.2.18: {}
+
+  obelisk.js@1.2.2: {}
 
   object-assign@4.1.1: {}
 
