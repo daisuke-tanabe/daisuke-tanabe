@@ -18,14 +18,6 @@ export function Layout({ children }: LayoutProps) {
           <span className="block text-xs tracking-wide">I&apos;m a Web Frontend Engineer</span>
         </div>
         <div className="flex gap-5 items-center ml-auto py-0.5">
-          <nav className="flex gap-7">
-            <NextLink href="/about" className="hover:underline">
-              About
-            </NextLink>
-            <NextLink href="/blog" className="hover:underline">
-              Blog
-            </NextLink>
-          </nav>
           <ModeToggle />
         </div>
       </header>
