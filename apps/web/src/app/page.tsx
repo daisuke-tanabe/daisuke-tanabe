@@ -22,29 +22,24 @@ async function fetchGitHubGraphQL<T>(query: string, variables: Record<string, an
   return json.data;
 }
 
+function getYearStartAndEnd(year) {
+  // 1月1日
+  const startDate = new Date(year, 0, 1);
+  // 12月31日
+  const endDate = new Date(year, 11, 31);
+
+  return { startDate, endDate };
+}
+
 export default async function Home() {
+  const fullYear = new Date().getFullYear();
+  const { startDate, endDate } = getYearStartAndEnd(fullYear);
+
   const data = await fetchGitHubGraphQL(
-    // `query userInfo($username: String!) {
-    //   user(login: $username) {
-    //     createdAt
-    //     contributionsCollection {
-    //       totalCommitContributions
-    //       restrictedContributionsCount
-    //       totalPullRequestReviewContributions
-    //     }
-    //     organizations(first: 1) {
-    //       totalCount
-    //     }
-    //     followers(first: 1) {
-    //       totalCount
-    //     }
-    //   }
-    // }`
-    // `    //   query($username:String!) {    //     user(login: $username){    //       contributionsCollection {    //         totalCommitContributions,    //         restrictedContributionsCount,    //         totalPullRequestReviewContributions,    //         contributionCalendar {    //           totalContributions    //         }    //       }    //     }    //   }    // `
-    // `    //   query($username:String!) {    //     user(login: $username){    //       contributionsCollection {    //         totalCommitContributions    //       }    //     }    //   }    // `
-    `query($username:String!) {
+    `query($username:String!, $from: DateTime!, $to: DateTime!) {
       user(login: $username) {
-        contributionsCollection {
+        contributionsCollection (from: $from, to: $to){
+          totalCommitContributions,
           contributionCalendar {
             totalContributions
             weeks {
@@ -58,22 +53,22 @@ export default async function Home() {
         }
       }
     }`, {
-      username: 'daisuke-tanabe'
+      username: 'daisuke-tanabe',
+      from: startDate,
+      to: endDate
     });
 
-  // console.dir(data.user.contributionsCollection.totalCommitContributions);
-  // console.dir(data.user.contributionsCollection.contributionCalendar.weeks, { depth: null });
-  // console.log(data.user.contributionsCollection.contributionCalendar);
-  // const result = data.user.contributionsCollection.contributionCalendar.weeks.map(({ contributionDays }) => {  //   return contributionDays;  // });
-  // const result = data.user.contributionsCollection.contributionCalendar.weeks.flatMap(({ contributionDays }) => {
-  //   return contributionDays;
-  // });
-  // console.log(result);
-
-  // console.log(data.user.contributionsCollection.contributionCalendar)
-
   const result = data.user.contributionsCollection.contributionCalendar.weeks.map(({ contributionDays }) => contributionDays);
-  // console.log(result);
 
-  return <Page data={result} />;
+  console.log(data.user.contributionsCollection.contributionCalendar.totalContributions)
+
+  return (
+    <Page
+      data={result}
+      startDate={startDate}
+      endDate={endDate}
+      fullYear={fullYear}
+      totalContributions={data.user.contributionsCollection.contributionCalendar.totalContributions}
+    />
+  );
 }
