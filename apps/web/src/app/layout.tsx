@@ -1,8 +1,8 @@
+import { ThemeProvider } from '@workspace/ui/providers';
 import localFont from 'next/font/local';
 import { ReactNode } from 'react';
 
 import { Layout } from '@/app/_layout/Layout';
-import { ThemeProvider } from '@/providers';
 
 import type { Metadata } from 'next';
 
