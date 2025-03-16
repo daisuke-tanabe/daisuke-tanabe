@@ -12,7 +12,7 @@ export default function Home() {
           <div className="flex mt-2 gap-1">
             <Button variant="ghost" size="icon" asChild className="size-7">
               <a href="https://github.com/daisuke-tanabe/daisuke-tanabe" target="_blank">
-                <Github/>
+                <Github />
               </a>
             </Button>
           </div>
@@ -23,7 +23,7 @@ export default function Home() {
           <div className="flex mt-2 gap-1">
             <Button variant="ghost" size="icon" asChild className="size-7">
               <a href="https://github.com/daisuke-tanabe/as-props-polymorphic-component" target="_blank">
-                <Github/>
+                <Github />
               </a>
             </Button>
           </div>
@@ -36,12 +36,12 @@ export default function Home() {
           <div className="flex mt-2 gap-2">
             <Button variant="ghost" size="icon" asChild className="size-7">
               <a href="https://github.com/daisuke-tanabe/github-contributions-visualization" target="_blank">
-                <Github/>
+                <Github />
               </a>
             </Button>
             <Button variant="ghost" size="icon" asChild className="size-7">
               <a href="https://codesandbox.io/p/sandbox/github-contributions-visualization-s5ky4x" target="_blank">
-                <Codesandbox/>
+                <Codesandbox />
               </a>
             </Button>
           </div>
