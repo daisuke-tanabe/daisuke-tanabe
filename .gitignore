@@ -44,3 +44,13 @@ next-env.d.ts
 
 # turbo
 .turbo
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
