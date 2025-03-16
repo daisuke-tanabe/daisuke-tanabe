@@ -12,11 +12,14 @@
     "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json,md}\"",
     "lint": "turbo lint",
     "lint-fix": "turbo lint-fix",
+    "lint-secret": "secretlint \"**/*\"",
     "test": "turbo test"
   },
   "devDependencies": {
+    "@secretlint/secretlint-rule-preset-recommend": "9.2.0",
     "eslint": "9.22.0",
     "prettier": "3.5.3",
+    "secretlint": "9.2.0",
     "turbo": "2.4.4",
     "typescript": "5.8.2"
   }
