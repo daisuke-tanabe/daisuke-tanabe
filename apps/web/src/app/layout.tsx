@@ -1,4 +1,4 @@
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { ThemeProvider } from '@workspace/ui/providers';
 import localFont from 'next/font/local';
 import { ReactNode } from 'react';

@@ -9,7 +9,7 @@ type LayoutProps = Readonly<{
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="grid mx-auto p-8 max-w-3xl w-auto h-full grid-rows-[auto_1fr_auto] h-screen">
+    <div className="grid mx-auto p-8 max-w-lg w-auto h-full grid-rows-[auto_1fr] h-screen">
       <header className="flex gap-4 items-start">
         <div>
           <NextLink href="/" className="block text-2xl tracking-wide hover:underline">
