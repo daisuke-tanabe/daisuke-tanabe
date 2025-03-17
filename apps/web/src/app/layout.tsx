@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { ThemeProvider } from '@workspace/ui/providers';
 import localFont from 'next/font/local';
 import { ReactNode } from 'react';
@@ -33,6 +34,8 @@ export default function RootLayout({
           <Layout>{children}</Layout>
         </ThemeProvider>
       </body>
+
+      <GoogleAnalytics gaId="G-7LH0P8DBP9" />
     </html>
   );
 }
