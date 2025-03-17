@@ -28,22 +28,14 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_cloudfront" {
   }
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.origin_id
 
-    forwarded_values {
-      query_string = false
+    cache_policy_id          = aws_cloudfront_cache_policy.daisuke_tanabe_no_cache_policy.id
+    origin_request_policy_id = aws_cloudfront_origin_request_policy.daisuke_tanabe_forward_all.id
 
-      cookies {
-        forward = "none"
-      }
-    }
-
-    viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 0
-    max_ttl                = 0
+    viewer_protocol_policy = "redirect-to-https"
   }
 
   restrictions {
@@ -54,8 +46,57 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_cloudfront" {
 
   viewer_certificate {
     acm_certificate_arn = "arn:aws:acm:us-east-1:${var.aws_sso_account_id}:certificate/6a00c25f-81bd-4e0f-bf93-ba816e4200d5"
+    minimum_protocol_version = "TLSv1.2_2021"
     ssl_support_method = "sni-only"
   }
 
   web_acl_id = aws_wafv2_web_acl.daisuke_tanabe_web_waf.arn # WAF を CloudFront に適用
+}
+
+# Managed-CachingOptimized と同じ設定
+resource "aws_cloudfront_cache_policy" "daisuke_tanabe_no_cache_policy" {
+  name    = "CachingOptimized"
+  comment = "Policy with caching enabled. Supports Gzip and Brotli compression"
+
+  min_ttl     = 1
+  max_ttl     = 31536000
+  default_ttl = 86400
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    headers_config {
+      header_behavior = "none"
+    }
+
+    cookies_config {
+      cookie_behavior = "none"
+    }
+
+    query_strings_config {
+      query_string_behavior = "none"
+    }
+
+    enable_accept_encoding_gzip = true
+    enable_accept_encoding_brotli = true
+  }
+}
+
+# Managed-AllViewerExceptHostHeader と同じ設定
+resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_forward_all" {
+  name    = "ForwardAll"
+  comment = "Forward all headers, query strings, and cookies"
+
+  cookies_config {
+    cookie_behavior = "all"
+  }
+
+  headers_config {
+    header_behavior = "allExcept"
+    headers {
+      items = ["host"]
+    }
+  }
+
+  query_strings_config {
+    query_string_behavior = "all"
+  }
 }
