@@ -22,6 +22,12 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  alias   = "use1"
+  profile = var.aws_sso_profile
+  region  = "us-east-1" # CloudFront 用 WAF のため us-east-1 を追加
+}
+
 resource "aws_iam_role_policy" "daisuke_tanabe_policy" {
   role = aws_iam_role.daisuke_tanabe_role.id
 

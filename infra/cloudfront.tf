@@ -56,4 +56,6 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_cloudfront" {
     acm_certificate_arn = "arn:aws:acm:us-east-1:${var.aws_sso_account_id}:certificate/6a00c25f-81bd-4e0f-bf93-ba816e4200d5"
     ssl_support_method = "sni-only"
   }
+
+  web_acl_id = aws_wafv2_web_acl.daisuke_tanabe_web_waf.arn # WAF を CloudFront に適用
 }
