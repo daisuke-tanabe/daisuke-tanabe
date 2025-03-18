@@ -31,8 +31,6 @@ ENV AWS_LWA_ENABLE_COMPRESSION=true
 WORKDIR /app
 
 COPY --from=installer /app/apps/web/.next/standalone ./
-COPY --from=installer /app/apps/web/.next/static ./apps/web/.next/static
-COPY --from=installer /app/apps/web/public ./apps/web/public
 COPY --from=installer /app/apps/web/run.sh ./apps/web/run.sh
 
 RUN ln -s /tmp/cache ./apps/web/.next/cache

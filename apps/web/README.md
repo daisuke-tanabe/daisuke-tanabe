@@ -42,6 +42,17 @@ aws lambda --profile daisuke-tanabe add-permission \
 --function-name {FUNCTION_NAME}
 ```
 
+
+## Github Secrets
+
+1. S3にデプロイするためのIAMロールのARNをGitHub Secretsに保存する
+2. S3のバケット名をGitHub Secretsに保存する
+
+```
+Name: AWS_GITHUB_ACTIONS_OIDC_ROLE_ARN
+Value: ****
+```
+
 ## ECR
 
 ECRリポジトリを作成してイメージをプッシュする

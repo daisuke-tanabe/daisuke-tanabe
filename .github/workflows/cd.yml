@@ -1,0 +1,41 @@
+name: cd
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    needs: [ci]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # OIDC トークンの取得を許可
+      contents: read   # リポジトリの内容を読み取る
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make Output Directory
+        run: mkdir -p ./.next
+
+      - name: Build Next.js with Docker
+        run: |
+          docker build -t daisuke-tanabe/web . -f ./apps/web/Dockerfile
+          docker create --name extract-container daisuke-tanabe/web
+          docker cp extract-container:/app/apps/web/.next/static ./.next/static
+          docker rm extract-container
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_OIDC_ROLE_ARN }}
+          aws-region: ap-northeast-1
+
+      - name: Upload to S3
+        run: |
+          aws s3 sync ./.next/static s3://${{ secrets.AWS_S3_BUCKET_NAME }}/_next/static

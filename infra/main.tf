@@ -28,6 +28,13 @@ provider "aws" {
   region  = "us-east-1" # CloudFront 用 WAF のため us-east-1 を追加
 }
 
+module "github_oidc" {
+  source              = "./modules/github_oidc"
+  github_repo         = var.gibhub_repo
+  aws_account_id      = var.aws_sso_account_id
+  s3_bucket_name      = "${var.bucket_name}-${random_id.suffix.hex}"
+}
+
 resource "aws_iam_role_policy" "daisuke_tanabe_policy" {
   role = aws_iam_role.daisuke_tanabe_role.id
 

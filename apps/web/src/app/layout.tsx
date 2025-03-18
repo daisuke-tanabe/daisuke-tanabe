@@ -10,7 +10,7 @@ import type { Metadata } from 'next';
 import '@workspace/ui/globals.css';
 
 const pixelMplus = localFont({
-  src: '../fonts/PixelMplus10-Regular.ttf',
+  src: '../assets/PixelMplus10-Regular.ttf',
   display: 'swap',
 });
 
@@ -25,10 +25,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.png" sizes="any" />
-      </head>
-
       <body className={`${pixelMplus.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Layout>{children}</Layout>
