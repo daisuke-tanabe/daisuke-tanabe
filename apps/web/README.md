@@ -42,15 +42,22 @@ aws lambda --profile daisuke-tanabe add-permission \
 --function-name {FUNCTION_NAME}
 ```
 
-
 ## Github Secrets
 
-1. S3にデプロイするためのIAMロールのARNをGitHub Secretsに保存する
-2. S3のバケット名をGitHub Secretsに保存する
+Github Actionsを実行するには以下が必要。
 
 ```
-Name: AWS_GITHUB_ACTIONS_OIDC_ROLE_ARN
-Value: ****
+// ECRのリポジトリ名
+AWS_ECR_REPO_NAME
+
+// OICDがアタッチされたIAMロール
+AWS_GITHUB_ACTIONS_OIDC_ROLE_ARN
+
+// S3のバケット名
+AWS_S3_BUCKET_NAME
+
+// AWS SSOのアカウントID
+AWS_SSO_ACCOUNT_ID
 ```
 
 ## ECR

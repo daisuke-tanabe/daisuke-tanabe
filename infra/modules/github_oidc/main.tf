@@ -35,6 +35,35 @@ resource "aws_iam_role" "github_actions_role" {
   })
 }
 
+resource "aws_iam_policy" "github_actions_ecr_policy" {
+  name        = "GitHubActionsECRPolicy"
+  description = "GitHub Actions が ECR にアクセスできるようにするポリシー"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = "ecr:GetAuthorizationToken"
+        Resource = "*"
+      },
+      {
+        Effect   = "Allow"
+        Action   = [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:PutImage",
+          "ecr:InitiateLayerUpload",
+          "ecr:UploadLayerPart",
+          "ecr:CompleteLayerUpload",
+          "ecr:GetDownloadUrlForLayer", # docker/build-push-action@v6 で必要
+          "ecr:BatchGetImage" # docker/build-push-action@v6 で必要
+        ]
+        Resource = "arn:aws:ecr:ap-northeast-1:${var.aws_account_id}:repository/daisuke-tanabe/web"
+      }
+    ]
+  })
+}
+
 # S3 へのアクセス権限を付与する IAM ポリシー
 resource "aws_iam_policy" "s3_policy" {
   name        = "GitHubActionsS3Policy"
@@ -45,7 +74,7 @@ resource "aws_iam_policy" "s3_policy" {
     Statement = [
       {
         Effect   = "Allow"
-        Action   = ["s3:PutObject", "s3:GetObject", "s3:ListBucket"]
+        Action   = ["s3:PutObject", "s3:GetObject", "s3:ListBucket", "s3:DeleteObject"]
         Resource = [
           "arn:aws:s3:::${var.s3_bucket_name}",
           "arn:aws:s3:::${var.s3_bucket_name}/*"
@@ -53,6 +82,12 @@ resource "aws_iam_policy" "s3_policy" {
       }
     ]
   })
+}
+
+# ロールに ECR ポリシーをアタッチ
+resource "aws_iam_role_policy_attachment" "attach_ecr_policy" {
+  role       = aws_iam_role.github_actions_role.name
+  policy_arn = aws_iam_policy.github_actions_ecr_policy.arn
 }
 
 # ロールに S3 ポリシーをアタッチ

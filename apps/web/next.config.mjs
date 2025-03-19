@@ -8,7 +8,7 @@ const nextConfig = {
   outputFileTracingRoot: join(import.meta.dirname, '../../'),
   transpilePackages: ['@workspace/ui'],
   // https://nextjs.org/docs/app/building-your-application/deploying#static-assets
-  ...(isProduction && { assetPrefix: 'https://daisuke-tanabe.dev' })
+  ...(isProduction && { assetPrefix: 'https://daisuke-tanabe.dev' }),
 };
 
 export default nextConfig;

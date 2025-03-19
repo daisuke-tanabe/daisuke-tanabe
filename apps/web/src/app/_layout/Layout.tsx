@@ -1,3 +1,5 @@
+import { Button } from '@workspace/ui/components';
+import { Github } from 'lucide-react';
 import NextLink from 'next/link';
 import { ReactNode } from 'react';
 
@@ -17,7 +19,12 @@ export function Layout({ children }: LayoutProps) {
           </NextLink>
           <span className="block text-xs tracking-wide">I&apos;m a Web Frontend Engineer</span>
         </div>
-        <div className="flex gap-5 items-center ml-auto py-0.5">
+        <div className="flex gap-1 items-center ml-auto py-0.5">
+          <Button variant="ghost" size="icon" asChild className="size-7">
+            <a href="https://github.com/daisuke-tanabe" target="_blank">
+              <Github />
+            </a>
+          </Button>
           <ModeToggle />
         </div>
       </header>

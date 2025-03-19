@@ -1,9 +1,13 @@
 name: cd
 
+# 2023年2月より、GitHub は新規リポジトリのデフォルトの GitHub Actions 権限を read-only に変更しました。
+# しかし、古いリポジトリ（2023年2月以前に作成されたもの）は デフォルトで read-write の権限を持っている可能性があります。
+# そのため、セキュリティの観点から「明示的に最小権限を設定するべき」と指摘されている ということです。
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -16,6 +20,7 @@ jobs:
     permissions:
       id-token: write  # OIDC トークンの取得を許可
       contents: read   # リポジトリの内容を読み取る
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,19 +28,32 @@ jobs:
       - name: Make Output Directory
         run: mkdir -p ./.next
 
-      - name: Build Next.js with Docker
-        run: |
-          docker build -t daisuke-tanabe/web . -f ./apps/web/Dockerfile
-          docker create --name extract-container daisuke-tanabe/web
-          docker cp extract-container:/app/apps/web/.next/static ./.next/static
-          docker rm extract-container
-
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_OIDC_ROLE_ARN }}
           aws-region: ap-northeast-1
+          role-session-name: github-actions
+
+      - name: Login to ECR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com
+
+      # linux/arm64 でビルドするために QEMU をセットアップする
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      # docker/build-push-action@v6 でプラットフォームを linux/arm64 でビルドすると linux/amd64 のマニフェストが求められてエラーになるため自前のシェルで実行する
+      - name: Build Next.js with Docker
+        run: |
+          docker build --platform linux/arm64 -t ${{AWS_ECR_REPO_NAME}} . -f ./apps/web/Dockerfile
+          docker create --name extract-container ${{AWS_ECR_REPO_NAME}}
+          docker cp extract-container:/app/apps/web/.next/static ./.next/static
+          docker tag ${{AWS_ECR_REPO_NAME}}:latest ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{AWS_ECR_REPO_NAME}}:latest
+          docker push ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{AWS_ECR_REPO_NAME}}:latest
+          docker rm extract-container
 
       - name: Upload to S3
         run: |
-          aws s3 sync ./.next/static s3://${{ secrets.AWS_S3_BUCKET_NAME }}/_next/static
+          aws s3 sync ./.next/static s3://${{ secrets.AWS_S3_BUCKET_NAME }}/_next/static --delete
