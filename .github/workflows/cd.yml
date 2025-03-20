@@ -63,3 +63,10 @@ jobs:
           aws lambda update-function-code \
             --function-name ${{secrets.AWS_LAMBDA_FUNC_NAME}} \
             --image-uri ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest
+
+      # すべてのキャッシュを削除するため将来的にはコストを考えて調整する
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.AWS_CLOUD_FRONT_DIST_ID }} \
+            --paths "/*"

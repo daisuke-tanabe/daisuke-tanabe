@@ -79,6 +79,25 @@ resource "aws_iam_policy" "github_actions_lambda_policy" {
   })
 }
 
+# Cloud front にアクセス権限を付与する IAM ポリシー
+resource "aws_iam_policy" "github_actions_cloud_front_policy" {
+  name        = "GitHubActionsCloudFrontPolicy"
+  description = "GitHub Actions が Lambda にアクセスできるようにするポリシー"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "cloudfront:CreateInvalidation"
+        ]
+        Resource = var.cloud_front_arn
+      }
+    ]
+  })
+}
+
 # S3 へのアクセス権限を付与する IAM ポリシー
 resource "aws_iam_policy" "s3_policy" {
   name        = "GitHubActionsS3Policy"
@@ -109,6 +128,12 @@ resource "aws_iam_role_policy_attachment" "attach_lambda_policy" {
 resource "aws_iam_role_policy_attachment" "attach_ecr_policy" {
   role       = aws_iam_role.github_actions_role.name
   policy_arn = aws_iam_policy.github_actions_ecr_policy.arn
+}
+
+# ロールに Cloud front ポリシーをアタッチ
+resource "aws_iam_role_policy_attachment" "attach_cloud_front_policy" {
+  role       = aws_iam_role.github_actions_role.name
+  policy_arn = aws_iam_policy.github_actions_cloud_front_policy.arn
 }
 
 # ロールに S3 ポリシーをアタッチ

@@ -32,7 +32,8 @@ module "github_oidc" {
   source              = "./modules/github_oidc"
   github_repo         = var.gibhub_repo
   aws_account_id      = var.aws_sso_account_id
-  lambda_arn      = aws_lambda_function.daisuke_tanabe_lambda.arn
+  lambda_arn          = aws_lambda_function.daisuke_tanabe_lambda.arn
+  cloud_front_arn     = aws_cloudfront_distribution.daisuke_tanabe_cloudfront.arn
   s3_bucket_name      = "${var.bucket_name}-${random_id.suffix.hex}"
 }
 

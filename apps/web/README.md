@@ -47,6 +47,9 @@ aws lambda --profile daisuke-tanabe add-permission \
 Github Actionsを実行するには以下が必要。
 
 ```
+// Cloud FrontのディストリビューションID
+AWS_CLOUD_FRONT_DIST_ID
+
 // ECRのリポジトリ名
 AWS_ECR_REPO_NAME
 
