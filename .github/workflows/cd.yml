@@ -47,13 +47,19 @@ jobs:
       # docker/build-push-action@v6 でプラットフォームを linux/arm64 でビルドすると linux/amd64 のマニフェストが求められてエラーになるため自前のシェルで実行する
       - name: Build Next.js with Docker
         run: |
-          docker build --platform linux/arm64 -t ${{AWS_ECR_REPO_NAME}} . -f ./apps/web/Dockerfile
-          docker create --name extract-container ${{AWS_ECR_REPO_NAME}}
+          docker build --platform linux/arm64 -t ${{secrets.AWS_ECR_REPO_NAME}} . -f ./apps/web/Dockerfile
+          docker create --name extract-container ${{secrets.AWS_ECR_REPO_NAME}}
           docker cp extract-container:/app/apps/web/.next/static ./.next/static
-          docker tag ${{AWS_ECR_REPO_NAME}}:latest ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{AWS_ECR_REPO_NAME}}:latest
-          docker push ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{AWS_ECR_REPO_NAME}}:latest
+          docker tag ${{secrets.AWS_ECR_REPO_NAME}}:latest ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest
+          docker push ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest
           docker rm extract-container
 
       - name: Upload to S3
         run: |
           aws s3 sync ./.next/static s3://${{ secrets.AWS_S3_BUCKET_NAME }}/_next/static --delete
+
+      - name: Deploy to AWS Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{secrets.AWS_LAMBDA_FUNC_NAME}} \
+            --image-uri ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest

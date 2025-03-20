@@ -1,7 +1,3 @@
-variable "github_repo" {}
-variable "aws_account_id" {}
-variable "s3_bucket_name" {}
-
 # GitHub OIDC プロバイダーの設定
 resource "aws_iam_openid_connect_provider" "github" {
   url             = "https://token.actions.githubusercontent.com"
@@ -64,6 +60,25 @@ resource "aws_iam_policy" "github_actions_ecr_policy" {
   })
 }
 
+# Lambda にアクセス権限を付与する IAM ポリシー
+resource "aws_iam_policy" "github_actions_lambda_policy" {
+  name        = "GitHubActionsLambdaPolicy"
+  description = "GitHub Actions が Lambda にアクセスできるようにするポリシー"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "lambda:UpdateFunctionCode"
+        ]
+        Resource = var.lambda_arn
+      }
+    ]
+  })
+}
+
 # S3 へのアクセス権限を付与する IAM ポリシー
 resource "aws_iam_policy" "s3_policy" {
   name        = "GitHubActionsS3Policy"
@@ -82,6 +97,12 @@ resource "aws_iam_policy" "s3_policy" {
       }
     ]
   })
+}
+
+# ロールに Lambda ポリシーをアタッチ
+resource "aws_iam_role_policy_attachment" "attach_lambda_policy" {
+  role       = aws_iam_role.github_actions_role.name
+  policy_arn = aws_iam_policy.github_actions_lambda_policy.arn
 }
 
 # ロールに ECR ポリシーをアタッチ
