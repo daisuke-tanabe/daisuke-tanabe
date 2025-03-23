@@ -1,18 +1,17 @@
 ---
 title: 'Markdown Sample'
 description: 'A simple markdown example with metadata.'
-author: 'John Doe'
-slug: 'example1'
-created_at: '2025-03-23T00:00:00'
+slug: 'example'
+created_at: '2025-03-23T15:00:00Z'
 updated_at: 'null'
 deleted_at: 'null'
 ---
 
-# Markdown Sample
+## Markdown Sample
 
 This is a **sample markdown document** with metadata.
 
-## Features
+### Features
 
 - **Headers** (`#`, `##`, `###`)
 - **Bold & Italic** (`**bold**`, `*italic*`)

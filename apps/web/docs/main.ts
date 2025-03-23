@@ -30,7 +30,6 @@ const allPosts = files.map(async (file) => {
     meta: {
       title: string;
       description: string;
-      author: string;
       slug: string;
       created_at: string;
       updated_at: string;
@@ -41,9 +40,8 @@ const allPosts = files.map(async (file) => {
   const jsonData = JSON.stringify({
     title: meta.title,
     description: meta.description,
-    author: meta.author,
     slug: meta.slug,
-    created_at: meta.created_at === 'null' ? null : meta.created_at,
+    created_at: meta.created_at,
     updated_at: meta.updated_at === 'null' ? null : meta.updated_at,
     deleted_at: meta.deleted_at === 'null' ? null : meta.deleted_at,
     content: result.value,
@@ -56,13 +54,15 @@ const allPosts = files.map(async (file) => {
     title: meta.title,
     description: meta.description,
     slug: meta.slug,
-    created_at: meta.created_at === 'null' ? null : meta.created_at,
+    created_at: meta.created_at,
     updated_at: meta.updated_at === 'null' ? null : meta.updated_at,
     deleted_at: meta.deleted_at === 'null' ? null : meta.deleted_at,
   };
 });
 
+// 昇順でソートした全体のJSONファイルを出力
 const data = await Promise.all(allPosts);
-
-// 全体のJSONファイルを出力
-fs.writeFileSync(`docs/json/data.json`, JSON.stringify(data));
+const sortedData = data.sort((a, b) => {
+  return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+});
+fs.writeFileSync(`docs/json/data.json`, JSON.stringify(sortedData));
