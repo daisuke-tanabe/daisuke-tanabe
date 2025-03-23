@@ -29,7 +29,7 @@ export default tseslint.config(
       eslint.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
       tseslint.configs.stylisticTypeChecked,
-      ...compat.extends('next/core-web-vitals', 'next/typescript'),
+      ...compat.extends('next/core-web-vitals'),
     ],
     plugins: {
       import: importPlugin,
