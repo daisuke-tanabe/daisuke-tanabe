@@ -54,3 +54,8 @@ next-env.d.ts
 
 # .tfvars files
 *.tfvars
+
+
+# Added by cargo
+
+/target
