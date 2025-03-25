@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Markdown Sample",
+    "description": "A simple markdown example with metadata.",
+    "slug": "example",
+    "created_at": "2025-03-23T15:00:00Z",
+    "updated_at": null,
+    "deleted_at": null
+  },
+  {
+    "title": "The Great Adventure of Banana Kingdom",
+    "description": "An epic tale of bananas, robots, and intergalactic waffles.",
+    "slug": "example2",
+    "created_at": "2025-03-20T15:00:00Z",
+    "updated_at": null,
+    "deleted_at": null
+  },
+  {
+    "title": "世界初！AIが自律的にカフェを開店！完全無人のカフェ、その仕組みとは",
+    "description": "2025年3月24日、東京都内に突如としてオープンした「AIカフェ・オートマト」",
+    "slug": "example3",
+    "created_at": "2025-03-10T15:00:00Z",
+    "updated_at": null,
+    "deleted_at": null
+  }
+]

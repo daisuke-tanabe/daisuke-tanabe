@@ -1,9 +1,21 @@
 @import "tailwindcss";
 @source "../components/**/*.{ts,tsx}";
 
+@tailwind utilities;
+
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: "Zen Kaku Gothic New";
+  src: local(var(--font-zen-kaku-gothic-new));
+}
+
+@font-face {
+  font-family: "Lato";
+  src: local(var(--font-lato));
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -123,6 +135,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-lato), var(--font-zen-kaku-gothic-new), sans-serif;
   }
   :root {
     --chart-1: 12 76% 61%;
@@ -138,4 +151,72 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+}
+
+.markdown-content {
+  @apply mt-7;
+}
+
+.markdown-content h2 {
+  @apply text-xl font-bold leading-[1.3] mt-12 first:mt-0;
+}
+
+.markdown-content h3 {
+  @apply text-lg font-bold leading-[1.4] mt-10;
+}
+
+.markdown-content h4 {
+  @apply text-base font-bold leading-[1.5] mt-8;
+}
+
+.markdown-content p {
+  @apply text-sm leading-[1.8] [&:not(:first-child)]:mt-4;
+}
+
+.markdown-content a {
+  @apply underline underline-offset-4 hover:no-underline;
+}
+
+.markdown-content hr {
+  @apply my-4;
+}
+
+.markdown-content ul {
+  @apply text-sm mt-4 ml-4 leading-[1.8] list-disc [&>li:not(:first-child)]:mt-1 [&>li>ul,ol]:mt-1;
+}
+
+.markdown-content ol {
+  @apply text-sm mt-4 ml-4 leading-[1.8] list-decimal [&>li:not(:first-child)]:mt-1 [&>li>ul,ol]:mt-1;
+}
+
+.markdown-content li > pre {
+  @apply mt-1 mb-0;
+}
+
+.markdown-content table {
+  @apply text-sm my-4 w-full;
+}
+
+.markdown-content table tr {
+  @apply m-0 border-t p-0 even:bg-muted;
+}
+
+.markdown-content table th {
+  @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+}
+
+.markdown-content table td {
+  @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+}
+
+.markdown-content pre {
+  @apply text-sm my-4 p-2 rounded bg-muted;
+}
+
+.markdown-content code {
+  @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-normal;
+}
+
+.markdown-content blockquote {
+  @apply mt-4 border-l-2 pl-4 italic;
 }

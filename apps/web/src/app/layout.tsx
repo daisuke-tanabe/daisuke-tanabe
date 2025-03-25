@@ -1,6 +1,6 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { ThemeProvider } from '@workspace/ui/providers';
-import localFont from 'next/font/local';
+import { Zen_Kaku_Gothic_New, Lato } from 'next/font/google';
 import { ReactNode } from 'react';
 
 import { Layout } from '@/app/_layout/Layout';
@@ -9,8 +9,19 @@ import type { Metadata } from 'next';
 
 import '@workspace/ui/globals.css';
 
-const pixelMplus = localFont({
-  src: '../assets/PixelMplus10-Regular.ttf',
+const zenKakuGothicNew = Zen_Kaku_Gothic_New({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  preload: true,
+  variable: '--font-zen-kaku-gothic-new',
+  display: 'swap',
+});
+
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+  preload: true,
+  variable: '--font-lato',
   display: 'swap',
 });
 
@@ -25,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className={`${pixelMplus.className}`}>
+      <body className={`${zenKakuGothicNew.variable} ${lato.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Layout>{children}</Layout>
         </ThemeProvider>
