@@ -1,4 +1,4 @@
-resource "aws_cloudfront_origin_access_control" "daisuke_tanabe_cloudfront_oac" {
+resource "aws_cloudfront_origin_access_control" "daisuke_tanabe_web_cloudfront_oac" {
   name                              = "daisuke-tanabe"
   origin_access_control_origin_type = "lambda"
   signing_behavior                  = "always"
@@ -10,7 +10,7 @@ locals {
   s3_origin_id = "s3-origin"
 }
 
-resource "aws_cloudfront_distribution" "daisuke_tanabe_cloudfront" {
+resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
   depends_on = [aws_s3_bucket.daisuke_tanabe_web_s3]
 
   is_ipv6_enabled = true
@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_cloudfront" {
 
   origin {
     domain_name = split("/", trimprefix(aws_lambda_function_url.nextjs_on_lambda.function_url, "https://"))[0]
-    origin_access_control_id = aws_cloudfront_origin_access_control.daisuke_tanabe_cloudfront_oac.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.daisuke_tanabe_web_cloudfront_oac.id
     origin_id = local.lambda_origin_id
 
     custom_origin_config {
@@ -43,17 +43,18 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_cloudfront" {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.lambda_origin_id
-    cache_policy_id          = aws_cloudfront_cache_policy.daisuke_tanabe_root_cache_policy.id
-    origin_request_policy_id = aws_cloudfront_origin_request_policy.daisuke_tanabe_forward_all.id
+    cache_policy_id          = aws_cloudfront_cache_policy.daisuke_tanabe_web_default_cache_policy.id
+    origin_request_policy_id = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_default_request_policy.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.daisuke_tanabe_web_default_headers_policy.id
     viewer_protocol_policy = "redirect-to-https"
   }
 
   ordered_cache_behavior {
-    path_pattern     = "/_next/*"
+    path_pattern     = "/_next/static/*"
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.s3_origin_id
-    cache_policy_id = aws_cloudfront_cache_policy.daisuke_tanabe_next_static_cache_policy.id
+    cache_policy_id = aws_cloudfront_cache_policy.daisuke_tanabe_web_next_static_cache_policy.id
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
   }
@@ -73,9 +74,9 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_cloudfront" {
   web_acl_id = aws_wafv2_web_acl.daisuke_tanabe_web_waf.arn # WAF を CloudFront に適用
 }
 
-# Root キャッシュポリシー
-resource "aws_cloudfront_cache_policy" "daisuke_tanabe_root_cache_policy" {
-  name    = "RootCaching"
+# デフォルトキャッシュポリシー
+resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_default_cache_policy" {
+  name    = "DaisukeTanabeWebDefaultCaching"
   comment = "Policy with caching enabled. Supports Gzip and Brotli compression"
 
   min_ttl     = 0
@@ -84,7 +85,10 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_root_cache_policy" {
 
   parameters_in_cache_key_and_forwarded_to_origin {
     headers_config {
-      header_behavior = "none"
+      header_behavior = "whitelist"
+      headers {
+        items = ["Accept"]
+      }
     }
 
     cookies_config {
@@ -100,37 +104,9 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_root_cache_policy" {
   }
 }
 
-# Next static assets キャッシュポリシー
-resource "aws_cloudfront_cache_policy" "daisuke_tanabe_next_static_cache_policy" {
-  name    = "NextStaticAssetsCaching"
-  comment = "Policy with caching enabled. Supports Gzip and Brotli compression"
-
-  min_ttl     = 0
-  max_ttl     = 31536000
-  default_ttl = 86400
-
-  parameters_in_cache_key_and_forwarded_to_origin {
-    headers_config {
-      header_behavior = "none"
-    }
-
-    cookies_config {
-      cookie_behavior = "none"
-    }
-
-    query_strings_config {
-      query_string_behavior = "none"
-    }
-
-    enable_accept_encoding_gzip = true
-    enable_accept_encoding_brotli = true
-  }
-}
-
-# Managed-AllViewerExceptHostHeader と同じ設定
-resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_forward_all" {
-  name    = "ForwardAll"
-  comment = "Forward all headers, query strings, and cookies"
+# デフォルトオリジンリクエストポリシー
+resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_web_default_request_policy" {
+  name    = "DaisukeTanabeWebDefaultRequestPolicy"
 
   cookies_config {
     cookie_behavior = "all"
@@ -139,11 +115,48 @@ resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_forward_all" {
   headers_config {
     header_behavior = "allExcept"
     headers {
-      items = ["host"]
+      items = ["host", "Accept"]
     }
   }
 
   query_strings_config {
     query_string_behavior = "all"
+  }
+}
+
+# デフォルトレスポンスヘッダーポリシー
+resource "aws_cloudfront_response_headers_policy" "daisuke_tanabe_web_default_headers_policy" {
+  name    = "DaisukeTanabeWebDefaultHeadersPolicy"
+
+  # 不要なヘッダー削除（X-Powered-By）
+  remove_headers_config {
+    items {
+      header = "X-Powered-By"
+    }
+  }
+}
+
+# NextStaticキャッシュポリシー
+resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_next_static_cache_policy" {
+  name    = "NextStaticCaching"
+  min_ttl     = 0
+  max_ttl     = 31536000
+  default_ttl = 86400
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    headers_config {
+      header_behavior = "none"
+    }
+
+    cookies_config {
+      cookie_behavior = "none"
+    }
+
+    query_strings_config {
+      query_string_behavior = "none"
+    }
+
+    enable_accept_encoding_gzip = true
+    enable_accept_encoding_brotli = true
   }
 }
