@@ -3,6 +3,8 @@ import { Github } from 'lucide-react';
 import NextLink from 'next/link';
 import { ReactNode } from 'react';
 
+import Image from '@/app/_components/Image';
+
 import { ModeToggle } from './ModeToggle';
 import { Navigation } from './Navigation';
 
@@ -16,7 +18,7 @@ export function Layout({ children }: LayoutProps) {
       <header className="flex gap-4 items-start">
         <div className="flex gap-4 items-center">
           <div className="h-[72] w-[72] rounded-[36] overflow-hidden">
-            <img src="/avatar.avif" alt="Daisuke Tanabe" />
+            <Image src="/images/avatar.avif" alt="Daisuke Tanabe" />
           </div>
           <div>
             <NextLink href="/" className="text-xl leading-[1.5] tracking-wide hover:underline">

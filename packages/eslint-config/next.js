@@ -74,6 +74,8 @@ export default tseslint.config(
       // https://github.com/vercel/turborepo/blob/main/packages/eslint-plugin-turbo/docs/rules/no-undeclared-env-vars.md
       'turbo/no-undeclared-env-vars': 'warn',
 
+      '@next/next/no-img-element': 'off',
+
       // https://typescript-eslint.io/rules/consistent-indexed-object-style/
       '@typescript-eslint/consistent-indexed-object-style': 'off',
 

@@ -11,11 +11,11 @@ locals {
 }
 
 resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
-  depends_on = [aws_s3_bucket.daisuke_tanabe_web_s3]
-
+  depends_on      = [aws_s3_bucket.daisuke_tanabe_web_s3]
+  http_version    = "http2and3"
   is_ipv6_enabled = true
   enabled         = true
-  aliases = ["daisuke-tanabe.dev"]
+  aliases         = ["daisuke-tanabe.dev"]
 
   origin {
     domain_name = split("/", trimprefix(aws_lambda_function_url.nextjs_on_lambda.function_url, "https://"))[0]
@@ -40,23 +40,37 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
   }
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.lambda_origin_id
-    cache_policy_id          = aws_cloudfront_cache_policy.daisuke_tanabe_web_default_cache_policy.id
-    origin_request_policy_id = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_default_request_policy.id
+    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
+    cached_methods             = ["GET", "HEAD"]
+    target_origin_id           = local.lambda_origin_id
+    cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_default_cache_policy.id
+    origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_default_request_policy.id
     response_headers_policy_id = aws_cloudfront_response_headers_policy.daisuke_tanabe_web_default_headers_policy.id
-    viewer_protocol_policy = "redirect-to-https"
+    viewer_protocol_policy     = "redirect-to-https"
   }
 
   ordered_cache_behavior {
-    path_pattern     = "/_next/static/*"
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.s3_origin_id
-    cache_policy_id = aws_cloudfront_cache_policy.daisuke_tanabe_web_next_static_cache_policy.id
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
+    path_pattern               = "/_next/static/*"
+    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
+    cached_methods             = ["GET", "HEAD"]
+    target_origin_id           = local.s3_origin_id
+    cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_next_static_cache_policy.id
+    origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_assets_request_policy.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.daisuke_tanabe_web_assets_headers_policy.id
+    compress                   = true
+    viewer_protocol_policy     = "redirect-to-https"
+  }
+
+  ordered_cache_behavior {
+    path_pattern               = "/images/*"
+    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
+    cached_methods             = ["GET", "HEAD"]
+    target_origin_id           = local.s3_origin_id
+    cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_images_cache_policy.id
+    origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_assets_request_policy.id
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.daisuke_tanabe_web_assets_headers_policy.id
+    compress                   = true
+    viewer_protocol_policy     = "redirect-to-https"
   }
 
   restrictions {
@@ -124,15 +138,27 @@ resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_web_default_requ
   }
 }
 
-# デフォルトレスポンスヘッダーポリシー
-resource "aws_cloudfront_response_headers_policy" "daisuke_tanabe_web_default_headers_policy" {
-  name    = "DaisukeTanabeWebDefaultHeadersPolicy"
+# アセットオリジンリクエストポリシー
+resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_web_assets_request_policy" {
+  name    = "DaisukeTanabeWebAssetsRequestPolicy"
 
-  # 不要なヘッダー削除（X-Powered-By）
-  remove_headers_config {
-    items {
-      header = "X-Powered-By"
+  cookies_config {
+    cookie_behavior = "none"
+  }
+
+  headers_config {
+    header_behavior = "whitelist"
+    headers {
+      items = [
+        "Origin",
+        "Referer",
+        "Accept",
+      ]
     }
+  }
+
+  query_strings_config {
+    query_string_behavior = "none"
   }
 }
 
@@ -158,5 +184,50 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_next_static_cache_pol
 
     enable_accept_encoding_gzip = true
     enable_accept_encoding_brotli = true
+  }
+}
+
+# imagesキャッシュポリシー
+resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_images_cache_policy" {
+  name    = "ImagesCaching"
+  min_ttl     = 0
+  max_ttl     = 31536000
+  default_ttl = 86400
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    headers_config {
+      header_behavior = "none"
+    }
+
+    cookies_config {
+      cookie_behavior = "none"
+    }
+
+    query_strings_config {
+      query_string_behavior = "none"
+    }
+
+    enable_accept_encoding_gzip = true
+    enable_accept_encoding_brotli = true
+  }
+}
+
+# デフォルトレスポンスヘッダーポリシー
+resource "aws_cloudfront_response_headers_policy" "daisuke_tanabe_web_default_headers_policy" {
+  name    = "DaisukeTanabeWebDefaultHeadersPolicy"
+
+  # 不要なヘッダー削除
+  remove_headers_config {
+    items { header = "X-Powered-By" }
+  }
+}
+
+# アセットレスポンスヘッダーポリシー
+resource "aws_cloudfront_response_headers_policy" "daisuke_tanabe_web_assets_headers_policy" {
+  name    = "DaisukeTanabeWebAssetsHeadersPolicy"
+
+  # 不要なヘッダー削除
+  remove_headers_config {
+    items { header = "X-Powered-By" }
   }
 }

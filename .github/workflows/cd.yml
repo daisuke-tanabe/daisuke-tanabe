@@ -49,14 +49,16 @@ jobs:
         run: |
           docker build --platform linux/arm64 -t ${{secrets.AWS_ECR_REPO_NAME}} . -f ./apps/web/Dockerfile
           docker create --name extract-container ${{secrets.AWS_ECR_REPO_NAME}}
-          docker cp extract-container:/app/apps/web/.next/static ./.next/static
+          mkdir -p ./dist/_next
+          docker cp extract-container:/app/apps/web/.next/static ./dist/_next/static
+          docker cp extract-container:/app/apps/web/public/. ./dist
           docker tag ${{secrets.AWS_ECR_REPO_NAME}}:latest ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest
           docker push ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest
           docker rm extract-container
 
       - name: Upload to S3
         run: |
-          aws s3 sync ./.next/static s3://${{ secrets.AWS_S3_BUCKET_NAME }}/_next/static --delete
+          aws s3 sync ./dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/ --delete --cache-control "public, max-age=31536000, immutable"
 
       - name: Deploy to AWS Lambda
         run: |
