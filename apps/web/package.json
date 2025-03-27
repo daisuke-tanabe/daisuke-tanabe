@@ -27,7 +27,7 @@
     "recharts": "2.15.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.0.15",
+    "@tailwindcss/postcss": "4.0.17",
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
