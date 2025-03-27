@@ -14,7 +14,7 @@ type LayoutProps = Readonly<{
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="grid mx-auto p-8 max-w-xl w-auto grid-rows-[auto_auto_1fr_auto] h-full">
+    <div className="grid mx-auto max-w-xl w-auto grid-rows-[auto_auto_1fr_auto] min-h-screen p-4 sm:p-8">
       <header className="flex gap-4 items-start">
         <div className="flex gap-4 items-center">
           <div className="h-[72] w-[72] rounded-[36] overflow-hidden">
@@ -36,7 +36,7 @@ export function Layout({ children }: LayoutProps) {
 
       <Navigation />
 
-      <main>{children}</main>
+      <main className="h-full">{children}</main>
 
       <footer className="flex items-center mt-20">
         <small className="font-light text-sm text-muted-foreground">&copy; Daisuke Tanabe.</small>

@@ -1,134 +1,90 @@
-import { ArrowUpRight } from 'lucide-react';
+import {
+  BlockSection,
+  BlockSectionGroup,
+  BlockSectionTitle,
+  EntryList,
+  EntryListItem,
+  LeadText,
+} from '@/app/_components';
 
 const workExperienceData = [
   {
-    label: 'Saasの新規開発',
-    summary: 'フロントエンド領域のリードエンジニア',
-    type: '2023 — Now',
+    description: 'フロントエンド領域のリードエンジニア',
+    label: '2023 — Now',
     tags: ['Next.js', 'TypeScript', 'Lit', 'MUI', 'Node.js', 'Vite', 'Turborepo', 'Docker', 'AWS'],
+    title: 'Saasの新規開発',
   },
   {
-    label: 'BtoC向け新規サービスのプロトタイプ開発',
-    summary: 'フロントエンド領域のリードエンジニア',
-    type: '2022 — 2023',
+    description: 'フロントエンド領域のリードエンジニア',
+    label: '2022 — 2023',
     tags: ['Next.js', 'TypeScript', 'MUI', 'Node.js', 'GraphQL', 'Turborepo', 'Vercel', 'AWS'],
+    title: 'BtoC向け新規サービスのプロトタイプ開発',
   },
   {
-    label: 'HRサービスの開発',
-    summary: 'フロントエンドチームのリードエンジニア',
-    type: '2016 — 2022',
+    description: 'フロントエンドチームのリードエンジニア',
+    label: '2016 — 2022',
     tags: ['JavaScript', 'Sass', 'jQuery', 'Node.js', 'React', 'Vue.js', 'Gulp', 'Webpack'],
+    title: 'HRサービスの開発',
   },
   {
-    label: 'Web制作/開発',
-    summary: '制作及び開発、保守、運用',
-    type: '2012 — 2016',
+    description: '制作及び開発、保守、運用',
+    label: '2012 — 2016',
     tags: ['JavaScript', 'Sass', 'jQuery', 'Angular', 'Node.js', 'PHP', 'WordPress', 'MySQL', 'Gulp'],
+    title: 'Web制作/開発',
   },
 ];
 
 const outputData = [
   {
-    label: 'daisuke-tanabe',
-    summary: 'ポートフォリオサイト',
-    externalLink: 'https://github.com/daisuke-tanabe/daisuke-tanabe',
-    type: 'Github',
+    description: 'ポートフォリオサイト',
+    label: 'Github',
+    link: 'https://github.com/daisuke-tanabe/daisuke-tanabe',
     tags: ['Next.js', 'TypeScript', 'shadcn/ui', 'Node.js', 'Turborepo', 'Docker', 'AWS'],
+    title: 'daisuke-tanabe',
   },
   {
-    label: 'as-props-polymorphic-component',
-    summary: 'ポリモーフィックコンポーネント',
-    externalLink: 'https://github.com/daisuke-tanabe/as-props-polymorphic-component',
-    type: 'Github',
+    description: 'ポリモーフィックコンポーネント',
+    label: 'Github',
+    link: 'https://github.com/daisuke-tanabe/as-props-polymorphic-component',
     tags: ['React.js', 'TypeScript'],
+    title: 'as-props-polymorphic-component',
   },
   {
-    label: 'github-contributions-visualization',
-    summary: 'Githubのコントリビューションの可視化',
-    externalLink: 'https://github.com/daisuke-tanabe/github-contributions-visualization',
-    type: 'Github',
+    description: 'Githubのコントリビューションの可視化',
+    label: 'Github',
+    link: 'https://github.com/daisuke-tanabe/github-contributions-visualization',
     tags: ['React.js', 'TypeScript', 'Obelisk.js'],
+    title: 'github-contributions-visualization',
   },
 ];
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-15">
-      <section>
-        <h2 className="text-sm leading-[1.6] mb-7">About</h2>
-        <p className="text-sm leading-[1.8]">
+    <BlockSectionGroup>
+      <BlockSection>
+        <BlockSectionTitle>About</BlockSectionTitle>
+        <LeadText>
           私はフロントエンド領域を中心にWebサービスの開発・設計・運用に携わっているエンジニアです。シンプルでクリーンなコードとベストプラクティスを重視し、継続的なシステム改善に取り組んでいます。
-        </p>
-      </section>
+        </LeadText>
+      </BlockSection>
 
-      <section>
-        <h2 className="text-sm leading-[1.6] mb-7">Work Experience</h2>
-        <div className="grid gap-6">
-          {workExperienceData.map(({ label, summary, type, tags }, index) => (
-            <div key={index} className="flex gap-6">
-              <div className="shrink-0 text-sm w-[6.5em]">
-                <span className="font-light text-muted-foreground leading-[1.6]">{type}</span>
-              </div>
-              <div className="flex flex-col gap-0.5">
-                <p className="text-sm leading-[1.6]">{label}</p>
-                <p className="text-sm text-muted-foreground leading-[1.6]">{summary}</p>
-                {tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-1.5">
-                    {tags.map((tag, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="font-light inline-flex items-center rounded-sm px-1.5 py-0.5 text-xs bg-secondary text-secondary-foreground"
-                        >
-                          {tag}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
+      <BlockSection>
+        <BlockSectionTitle>Work Experience</BlockSectionTitle>
+        <EntryList>
+          {workExperienceData.map(({ description, label, tags, title }, index) => (
+            <EntryListItem key={index} description={description} label={label} tags={tags} title={title} />
           ))}
-        </div>
-      </section>
+        </EntryList>
+      </BlockSection>
 
-      <section>
-        <h2 className="text-sm leading-[1.6] mb-7">Output</h2>
-        <div className="grid gap-6">
-          {outputData.map(({ label, summary, externalLink, type, tags }, index) => (
-            <div key={index} className="flex gap-6">
-              <div className="shrink-0 text-sm w-[6em]">
-                <span className="font-light text-muted-foreground leading-[1.6]">{type}</span>
-              </div>
-              <div className="flex flex-col gap-0.5">
-                <a
-                  href={externalLink}
-                  target="_blank"
-                  className="inline-flex items-center text-sm leading-[1.6] hover:underline"
-                >
-                  {label}
-                  <ArrowUpRight className="h-[14px] w-[14px] ml-0.5" />
-                </a>
-                <p className="text-sm text-muted-foreground leading-[1.6]">{summary}</p>
-                {tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-1.5">
-                    {tags.map((tag, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="font-light inline-flex items-center rounded-sm px-1.5 py-0.5 text-xs bg-secondary text-secondary-foreground"
-                        >
-                          {tag}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
+      <BlockSection>
+        <BlockSectionTitle>Output</BlockSectionTitle>
+        <EntryList>
+          {outputData.map(({ description, label, link, tags, title }, index) => (
+            <EntryListItem key={index} description={description} link={link} label={label} tags={tags} title={title} />
           ))}
-        </div>
-      </section>
-    </div>
+        </EntryList>
+      </BlockSection>
+    </BlockSectionGroup>
   );
 }
