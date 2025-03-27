@@ -82,6 +82,40 @@ export default tseslint.config(
       // https://typescript-eslint.io/rules/consistent-type-definitions/
       '@typescript-eslint/consistent-type-definitions': 'off',
 
+      // https://typescript-eslint.io/rules/naming-convention/
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          // class, enum, interface, typeAlias, typeParameter
+          // https://typescript-eslint.io/rules/naming-convention/#group-selectors
+          selector: ['typeLike'],
+          format: ['PascalCase'],
+        },
+        // classMethod, objectLiteralMethod, typeMethod, function, parameter, variable
+        // https://typescript-eslint.io/rules/naming-convention/#group-selectors
+        {
+          selector: ['method', 'variableLike'],
+          format: ['camelCase'],
+        },
+        // 関数パラメーターは先頭のアンダースコアを許容する
+        {
+          selector: ['parameter'],
+          format: ['camelCase'],
+          leadingUnderscore: 'allow',
+        },
+        // 関数コンポーネントが存在するのでキャメルケースとパスカルケースの両方を許可する
+        {
+          selector: ['function'],
+          format: ['camelCase', 'PascalCase'],
+        },
+        {
+          selector: ['variable'],
+          types: ['boolean'],
+          prefix: ['is', 'has', 'exists', 'should', 'can'],
+          format: ['camelCase'],
+        },
+      ],
+
       // https://typescript-eslint.io/rules/no-floating-promises/
       '@typescript-eslint/no-floating-promises': ['error', { ignoreIIFE: true }],
 
