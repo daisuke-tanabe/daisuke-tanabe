@@ -75,8 +75,8 @@ aws ecr get-login-password --profile ${SSO_PROFILE} --region {REGION} | docker l
 docker build -t daisuke-tanabe/web . -f ./apps/web/Dockerfile
 
 // イメージにタグをつける
-docker tag daisuke-tanabe/web:latest {SSO_ACCOUNT_ID}.dkr.ecr.{REGION}.amazonaws.com/daisuke-tanabe/web:latest
+docker tag daisuke-tanabe/web:latest {SSO_ACCOUNT_ID}.dkr.ecr.{REGION}.amazonaws.com/${REPOSITORY_NAME}:latest
 
 // AWSにイメージをプッシュする
-docker push {REGION}.dkr.ecr.{REGION}.amazonaws.com/daisuke-tanabe/web:latest
+docker push {REGION}.dkr.ecr.{REGION}.amazonaws.com/${REPOSITORY_NAME}:latest
 ```

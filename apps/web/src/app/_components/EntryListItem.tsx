@@ -17,7 +17,7 @@ export function EntryListItem({ description, link, label, tags, title }: EntryLi
       <div className="flex flex-col gap-0.5">
         {link ? (
           <a href={link} target="_blank" className="inline-flex items-center text-sm leading-[1.6] hover:underline">
-            {label}
+            {title}
             <ArrowUpRight className="h-[14px] w-[14px] ml-0.5" />
           </a>
         ) : (
