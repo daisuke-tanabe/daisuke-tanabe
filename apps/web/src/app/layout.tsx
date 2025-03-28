@@ -1,11 +1,10 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { ThemeProvider } from '@workspace/ui/providers';
+import { Metadata } from 'next';
 import { Zen_Kaku_Gothic_New, Lato } from 'next/font/google';
 import { ReactNode } from 'react';
 
 import { Layout } from '@/app/_layout/Layout';
-
-import type { Metadata } from 'next';
 
 import '@workspace/ui/globals.css';
 
@@ -26,7 +25,10 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: 'Daisuke Tanabe',
+  title: {
+    template: '%s - Daisuke Tanabe',
+    default: 'Daisuke Tanabe',
+  },
 };
 
 export default function RootLayout({

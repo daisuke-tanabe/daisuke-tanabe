@@ -1,3 +1,5 @@
+import { Metadata } from 'next';
+
 import { BlockSection, BlockSectionGroup, BlockSectionTitle, EntryList, EntryListItem } from '@/app/_components';
 
 const collectionData = [
@@ -17,6 +19,10 @@ const collectionData = [
     title: 'Red House Guitars / Piccola S',
   },
 ];
+
+export const metadata: Metadata = {
+  title: 'Collection',
+};
 
 export default function CollectionPage() {
   return (
