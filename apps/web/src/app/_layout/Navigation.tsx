@@ -15,10 +15,6 @@ const tabsData = [
     label: 'posts',
     href: '/posts',
   },
-  {
-    label: 'collection',
-    href: '/collection',
-  },
 ];
 
 export function Navigation() {
