@@ -17,14 +17,14 @@ export function Layout({ children }: LayoutProps) {
     <div className="grid mx-auto max-w-xl w-auto grid-rows-[auto_auto_1fr_auto] min-h-screen p-4 sm:p-8">
       <header className="flex gap-4 items-start">
         <div className="flex gap-4 items-center">
-          <div className="h-[72] w-[72] rounded-[36] overflow-hidden">
-            <Image src="/images/avatar.avif" alt="Daisuke Tanabe" />
+          <div className="h-[48] w-[48] rounded-[24] overflow-hidden">
+            <Image src="/images/avatar.avif" alt="Daisuke Tanabe" width="48" height="48" />
           </div>
           <div>
-            <NextLink href="/" className="text-xl leading-[1.5] tracking-wide hover:underline">
+            <NextLink href="/" className="text-lg leading-[1.4] tracking-wide hover:underline">
               Daisuke&thinsp;Tanabe
             </NextLink>
-            <span className="block text-xs leading-[1.5] tracking-wide px-0.5 text-muted-foreground">
+            <span className="block text-xs leading-[1.4] tracking-wide px-0.5 text-muted-foreground">
               Tokyo、Web Frontend Engineer
             </span>
           </div>
@@ -42,12 +42,20 @@ export function Layout({ children }: LayoutProps) {
         <small className="font-light text-sm text-muted-foreground">&copy; Daisuke Tanabe.</small>
         <div className="flex gap-2 ml-auto">
           <Button variant="ghost" size="icon" className="size-7" asChild>
-            <a href="https://github.com/daisuke-tanabe" target="_blank">
+            <a
+              href="https://github.com/daisuke-tanabe"
+              target="_blank"
+              aria-label="GitHub で Daisuke Tanabe のプロフィールを見る"
+            >
               <Github className=" h-[1em] w-[1em]" />
             </a>
           </Button>
           <Button variant="ghost" size="icon" className="size-7" asChild>
-            <a href="https://x.com/DaisukeTanabe" target="_blank">
+            <a
+              href="https://x.com/DaisukeTanabe"
+              target="_blank"
+              aria-label="X（旧Twitter）で Daisuke Tanabe のプロフィールを見る"
+            >
               <svg
                 width="16"
                 height="16.36"

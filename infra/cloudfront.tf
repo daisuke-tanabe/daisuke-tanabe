@@ -45,7 +45,6 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
     target_origin_id           = local.lambda_origin_id
     cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_default_cache_policy.id
     origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_default_request_policy.id
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.daisuke_tanabe_web_default_headers_policy.id
     viewer_protocol_policy     = "redirect-to-https"
   }
 
@@ -56,7 +55,6 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
     target_origin_id           = local.s3_origin_id
     cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_next_static_cache_policy.id
     origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_assets_request_policy.id
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.daisuke_tanabe_web_assets_headers_policy.id
     compress                   = true
     viewer_protocol_policy     = "redirect-to-https"
   }
@@ -68,7 +66,6 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
     target_origin_id           = local.s3_origin_id
     cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_images_cache_policy.id
     origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_assets_request_policy.id
-    response_headers_policy_id = aws_cloudfront_response_headers_policy.daisuke_tanabe_web_assets_headers_policy.id
     compress                   = true
     viewer_protocol_policy     = "redirect-to-https"
   }
@@ -110,7 +107,10 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_default_cache_policy"
     }
 
     query_strings_config {
-      query_string_behavior = "none"
+      query_string_behavior = "whitelist"
+      query_strings {
+        items = ["_rsc"]
+      }
     }
 
     enable_accept_encoding_gzip = true
@@ -209,25 +209,5 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_images_cache_policy" 
 
     enable_accept_encoding_gzip = true
     enable_accept_encoding_brotli = true
-  }
-}
-
-# デフォルトレスポンスヘッダーポリシー
-resource "aws_cloudfront_response_headers_policy" "daisuke_tanabe_web_default_headers_policy" {
-  name    = "DaisukeTanabeWebDefaultHeadersPolicy"
-
-  # 不要なヘッダー削除
-  remove_headers_config {
-    items { header = "X-Powered-By" }
-  }
-}
-
-# アセットレスポンスヘッダーポリシー
-resource "aws_cloudfront_response_headers_policy" "daisuke_tanabe_web_assets_headers_policy" {
-  name    = "DaisukeTanabeWebAssetsHeadersPolicy"
-
-  # 不要なヘッダー削除
-  remove_headers_config {
-    items { header = "X-Powered-By" }
   }
 }

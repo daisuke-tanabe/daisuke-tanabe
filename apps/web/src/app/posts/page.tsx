@@ -4,6 +4,7 @@ import { BlockSectionGroup, LeadText } from '@/app/_components';
 
 export const metadata: Metadata = {
   title: 'Posts',
+  description: 'Daisuke Tanabe のポートフォリオサイトに掲載された投稿一覧です。',
 };
 
 export default function PostsPage() {

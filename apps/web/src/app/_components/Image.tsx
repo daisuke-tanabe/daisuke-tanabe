@@ -1,7 +1,12 @@
 import { ImgHTMLAttributes } from 'react';
 
-export default function Image({ src, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
-  const fullPath = src ? `${process.env.NEXT_PUBLIC_CDN_URL}${src}` : undefined;
+const isProd = process.env.NODE_ENV === 'production';
 
-  return <img src={fullPath} alt={alt} {...props} />;
+export type ImageProps = ImgHTMLAttributes<HTMLImageElement>;
+
+export default function Image({ src, alt, ...props }: ImageProps) {
+  const prefix = isProd ? process.env.NEXT_PUBLIC_CDN_URL : '';
+  const url = src ? `${prefix}${src}` : undefined;
+
+  return <img src={url} alt={alt} {...props} />;
 }

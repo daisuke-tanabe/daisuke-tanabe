@@ -4,6 +4,7 @@ import NextLink from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Not Found',
+  description: 'Daisuke Tanabe のポートフォリオサイトに存在しないページです。',
 };
 
 export default function NotFound() {

@@ -29,13 +29,16 @@ export const metadata: Metadata = {
     template: '%s - Daisuke Tanabe',
     default: 'Daisuke Tanabe',
   },
+  description: 'Daisuke Tanabe のポートフォリオサイトのホームページです。',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+export const dynamic = 'force-dynamic';
+
+type RootLayoutProps = Readonly<{
   children: ReactNode;
-}>) {
+}>;
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ja" suppressHydrationWarning>
       <body className={`${zenKakuGothicNew.variable} ${lato.variable}`}>
