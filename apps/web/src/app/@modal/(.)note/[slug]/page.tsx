@@ -4,15 +4,19 @@ import path from 'path';
 import parse, { domToReact, HTMLReactParserOptions, Element, DOMNode } from 'html-react-parser';
 import DOMPurify from 'isomorphic-dompurify';
 import NextLink from 'next/link';
-import React from 'react';
+import React, { CSSProperties } from 'react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+import { Page } from '@/app/@modal/(.)note/[slug]/_page';
 
 type Post = {
   title: string;
-  description: string;
   slug: string;
   created_at: string;
   updated_at: string;
   deleted_at: string;
+  published_at: string;
   content: string;
 };
 
@@ -50,6 +54,20 @@ const options: HTMLReactParserOptions = {
         );
       }
     }
+
+    if (domNode instanceof Element && domNode.attribs && domNode.name === 'pre') {
+      const codeBlockElement = domNode.children[0];
+      if (codeBlockElement instanceof Element && codeBlockElement.attribs && codeBlockElement.name === 'code') {
+        const language = codeBlockElement.attribs.class.match(/(?<=language-)\w+/g)?.at(0);
+        if ('data' in codeBlockElement.children[0] && typeof codeBlockElement.children[0].data === 'string') {
+          return (
+            <SyntaxHighlighter language={language} style={a11yDark as { [p: string]: CSSProperties }}>
+              {codeBlockElement.children[0].data}
+            </SyntaxHighlighter>
+          );
+        }
+      }
+    }
   },
 };
 
@@ -63,12 +81,8 @@ export default async function PostByIdPage({ params }: { params: Promise<Post> }
   const sanitizedHtml = DOMPurify.sanitize(data.content);
 
   return (
-    <>
-      <div className="flex flex-col gap-4 mb-12">
-        <h1 className="text-2xl leading-[1.2] font-bold">{data.title}</h1>
-        <p className="text-sm leading-[1.6]">{data.description}</p>
-      </div>
+    <Page title={data.title} publishedAt={data.published_at}>
       <div className="markdown-content">{parse(sanitizedHtml, options)}</div>
-    </>
+    </Page>
   );
 }
