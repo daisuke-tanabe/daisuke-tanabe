@@ -18,7 +18,7 @@
     "@workspace/ui": "workspace:*",
     "babel-plugin-react-compiler": "19.0.0-beta-e993439-20250328",
     "entities": "6.0.0",
-    "html-react-parser": "5.2.2",
+    "html-react-parser": "5.2.3",
     "install": "0.13.0",
     "isomorphic-dompurify": "2.22.0",
     "jsdom": "26.0.0",
