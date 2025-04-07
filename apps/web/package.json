@@ -16,7 +16,7 @@
     "@formkit/tempo": "0.1.2",
     "@next/third-parties": "15.2.4",
     "@workspace/ui": "workspace:*",
-    "babel-plugin-react-compiler": "19.0.0-beta-e993439-20250328",
+    "babel-plugin-react-compiler": "19.0.0-beta-e993439-20250405",
     "entities": "6.0.0",
     "html-react-parser": "5.2.3",
     "install": "0.13.0",
