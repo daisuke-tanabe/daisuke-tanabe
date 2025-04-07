@@ -154,7 +154,7 @@
 }
 
 .markdown-content {
-  @apply mt-7;
+  @apply grid self-start mt-7;
 }
 
 .markdown-content h2 {
@@ -209,12 +209,16 @@
   @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
 }
 
-.markdown-content pre {
-  @apply text-sm my-4 p-2 rounded bg-muted;
+.markdown-content code {
+  @apply bg-muted px-[0.3rem] py-[0.2rem] text-xs;
 }
 
-.markdown-content code {
-  @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-normal;
+.markdown-content pre {
+  @apply text-xs my-4 p-4 rounded bg-muted overflow-y-hidden;
+}
+
+.markdown-content pre code {
+  @apply block bg-transparent p-3 leading-[1.8];
 }
 
 .markdown-content blockquote {

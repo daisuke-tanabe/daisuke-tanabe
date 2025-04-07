@@ -14,7 +14,7 @@ type LayoutProps = Readonly<{
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="grid mx-auto max-w-xl w-auto grid-rows-[auto_auto_1fr_auto] min-h-screen p-4 sm:p-8">
+    <div className="grid mx-auto w-auto grid-rows-[auto_auto_1fr_auto] min-h-screen p-4 sm:p-8 sm:max-w-xl">
       <header className="flex gap-4 items-start">
         <div className="flex gap-4 items-center">
           <div className="h-[48] w-[48] rounded-[24] overflow-hidden">

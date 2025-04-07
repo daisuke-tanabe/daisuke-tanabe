@@ -1,0 +1,10 @@
+{
+  "title": "Next.jsの静的アセットをCDNで配信するには",
+  "pathname": "/note/nextjs-asset-prefix",
+  "slug": "nextjs-asset-prefix",
+  "created_at": "2025-03-31T15:00:00Z",
+  "updated_at": null,
+  "deleted_at": null,
+  "published_at": "2025-03-31T15:00:00Z",
+  "content": "<p>VercelにデプロイするとCDNが自動的に構成されますが、それ以外にデプロイする場合はアセットにプレフィックスを設定する追加作業が発生します。</p>\n<p>Next.jsがビルド時に生成する静的アセット（<code>/_next/static/*</code>）をCDNで配信するには、<code>next.config.mjs</code> の <code>assetPrefix</code> オプションで配信先のURLを指定します。</p>\n<pre><code class=\"language-javascript:next.config.mjs\">/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  ...(process.env.NODE_ENV === 'production' &#x26;&#x26; {\n    assetPrefix: process.env.NEXT_PUBLIC_CDN_URL,\n  }),\n};\n\nexport default nextConfig;\n</code></pre>\n<p>この<code>assetPrefix</code> オプションは <code>public</code> フォルダ内のアセットパスには影響を与えません。<br>\n<code>public</code> フォルダのアセットもCDNを経由して配信する場合は、以下のようなコンポーネントを作成し、プレフィックスを付与する必要があります。</p>\n<pre><code class=\"language-typescript:Image.tsx\">import { ImgHTMLAttributes } from 'react';\n\nconst isProd = process.env.NODE_ENV === 'production';\n\nexport default function Image({ src, alt, ...props }: ImgHTMLAttributes&#x3C;HTMLImageElement>) {\n  const prefix = isProd ? process.env.NEXT_PUBLIC_CDN_URL : '';\n  const url = src ? `${prefix}${src}` : undefined;\n\n  return &#x3C;img src={url} alt={alt} {...props} />;\n}\n</code></pre>"
+}

@@ -1,5 +1,7 @@
 import fs from 'node:fs';
 
+import { decode } from 'entities';
+import DOMPurify from 'isomorphic-dompurify';
 import rehypeStringify from 'rehype-stringify';
 import remarkExtractFrontmatter from 'remark-extract-frontmatter';
 import remarkFrontmatter from 'remark-frontmatter';
@@ -29,34 +31,42 @@ const allPosts = files.map(async (file) => {
   const { meta } = result.data as {
     meta: {
       title: string;
-      description: string;
       slug: string;
       created_at: string;
       updated_at: string;
       deleted_at: string;
+      published_at: string;
     };
   };
 
   const jsonData = JSON.stringify({
     title: meta.title,
-    description: meta.description,
+    pathname: `/note/${meta.slug}`,
     slug: meta.slug,
     created_at: meta.created_at,
     updated_at: meta.updated_at === 'null' ? null : meta.updated_at,
     deleted_at: meta.deleted_at === 'null' ? null : meta.deleted_at,
+    published_at: meta.published_at === 'null' ? null : meta.published_at,
     content: result.value,
   });
 
   // 個別にJSONファイルを出力
   fs.writeFileSync(`docs/json/${file.replace('.md', '')}.json`, jsonData);
 
+  const description = DOMPurify.sanitize(result.value.toString(), {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
+  });
+
   return {
     title: meta.title,
-    description: meta.description,
+    description: `${decode(description).slice(0, 50)}...`,
+    pathname: `/note/${meta.slug}`,
     slug: meta.slug,
     created_at: meta.created_at,
     updated_at: meta.updated_at === 'null' ? null : meta.updated_at,
     deleted_at: meta.deleted_at === 'null' ? null : meta.deleted_at,
+    published_at: meta.published_at === 'null' ? null : meta.published_at,
   };
 });
 

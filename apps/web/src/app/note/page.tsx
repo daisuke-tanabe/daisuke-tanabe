@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { BlockSectionGroup, LeadText } from '@/app/_components';
+import { BlockSection, BlockSectionGroup, BlockSectionTitle, LeadText } from '@/app/_components';
 
 export const metadata: Metadata = {
   title: 'Posts',
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 export default function PostsPage() {
   return (
     <BlockSectionGroup>
-      <LeadText>投稿が存在しません</LeadText>
+      <BlockSection>
+        <BlockSectionTitle>2025</BlockSectionTitle>
+        <LeadText>投稿が存在しません</LeadText>
+      </BlockSection>
     </BlockSectionGroup>
   );
 }

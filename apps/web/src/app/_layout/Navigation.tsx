@@ -12,8 +12,8 @@ const tabsData = [
     href: '/',
   },
   {
-    label: 'posts',
-    href: '/posts',
+    label: 'note',
+    href: '/note',
   },
 ];
 
