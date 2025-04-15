@@ -18,20 +18,17 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    outputs:
+      node-modules-cache-hit: ${{ steps.cache.outputs.cache-hit }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .tool-versions
-
-      - name: Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           run_install: false
 
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .tool-versions
@@ -46,12 +43,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           run_install: false
 
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .tool-versions
@@ -63,26 +60,28 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-#  test:
-#    needs: setup
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#
-#      - name: Install pnpm
-#        uses: pnpm/action-setup@v4
-#        with:
-#          run_install: false
-#
-#      - name: Use Node.js
-#        uses: actions/setup-node@v4
-#        with:
-#          node-version-file: .tool-versions
-#          cache: 'pnpm'
-#
-#      - name: Install dependencies
-#        run: pnpm install
-#
-#      - name: Test
-#        run: npm test
-#
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .tool-versions
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test
+        run: pnpm test
+
+      - name: Type check
+        run: pnpm type-check
