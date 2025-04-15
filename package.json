@@ -7,17 +7,18 @@
   },
   "scripts": {
     "build": "turbo build",
-    "check-types": "turbo check-types",
     "dev": "turbo dev",
     "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json,md}\"",
     "lint": "turbo lint",
     "lint-fix": "turbo lint-fix",
     "lint-secret": "secretlint \"**/*\"",
-    "test": "turbo test"
+    "test": "turbo test",
+    "type-check": "turbo type-check"
   },
   "devDependencies": {
     "@secretlint/secretlint-rule-preset-recommend": "9.3.0",
     "eslint": "9.24.0",
+    "npm-run-all2": "7.0.2",
     "prettier": "3.5.3",
     "secretlint": "9.3.0",
     "turbo": "2.5.0",

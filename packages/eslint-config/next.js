@@ -2,6 +2,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import typeScriptESLintParser from '@typescript-eslint/parser';
 import { dirname } from 'path';
@@ -19,6 +20,10 @@ const compat = new FlatCompat({
 export default tseslint.config(
   {
     languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+      },
       parser: typeScriptESLintParser,
       parserOptions: {
         projectService: true,
