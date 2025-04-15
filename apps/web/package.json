@@ -22,7 +22,7 @@
     "install": "0.13.0",
     "isomorphic-dompurify": "2.23.0",
     "jsdom": "26.1.0",
-    "lucide-react": "0.485.0",
+    "lucide-react": "0.488.0",
     "next": "15.3.0",
     "next-themes": "0.4.6",
     "react": "19.1.0",
