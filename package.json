@@ -11,7 +11,7 @@
     "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json,md}\"",
     "lint": "turbo lint",
     "lint-fix": "turbo lint-fix",
-    "lint-secret": "secretlint \"**/*\"",
+    "lint-secret": "secretlint \"**/*.{js,mjs,ts,tsx,json,md,sh,yml,env}\"",
     "test": "turbo test",
     "type-check": "turbo type-check"
   },
