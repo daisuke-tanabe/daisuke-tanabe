@@ -1,4 +1,4 @@
-import type { ExtendableProps } from './extendable';
+import type { Extendable } from './extendable';
 
 type Base = {
   foo: string;
@@ -10,7 +10,7 @@ type Override = {
   baz: boolean;
 };
 
-type Result = ExtendableProps<Base, Override>;
+type Result = Extendable<Base, Override>;
 
 // ✅ 正常系（暗黙的なコンパイルで成功）
 const test1: Result = {

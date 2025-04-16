@@ -1,6 +1,5 @@
 /**
- * BasePropsとOverridePropsを受け取り、OverridePropsでBasePropsを上書きする
+ * Base と Override を受け取り、Override で Base を上書きする
  * 再帰的には実行がされないので注意すること
  */
-export type ExtendableProps<TBaseProps = object, TOverrideProps = object> = TOverrideProps &
-  Omit<TBaseProps, keyof TOverrideProps>;
+export type Extendable<TBase = object, TOverride = object> = TOverride & Omit<TBase, keyof TOverride>;

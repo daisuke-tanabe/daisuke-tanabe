@@ -1,10 +1,10 @@
 import { ImgHTMLAttributes } from 'react';
 
-import { ExtendableProps } from '@/types';
+import { Extendable } from '@/types';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-export type ImageProps = ExtendableProps<
+export type ImageProps = Extendable<
   ImgHTMLAttributes<HTMLImageElement>,
   {
     src?: string;
