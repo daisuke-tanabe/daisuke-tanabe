@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z, ZodTypeAny } from 'zod';
 
 export function createStringSchema({
   isRequired,
@@ -24,4 +24,8 @@ export function createStringSchema({
   }
 
   return schema;
+}
+
+export function createTupleSchema(schemas: [ZodTypeAny, ...ZodTypeAny[]]) {
+  return z.tuple(schemas);
 }
