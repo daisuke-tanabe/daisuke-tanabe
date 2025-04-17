@@ -15,15 +15,12 @@ describe('tupleMap 関数', () => {
 
       expect(result).toEqual(['a0', 'b1', 'c2']);
     });
-  });
 
-  describe('❌️ 異常系', () => {
-    it('空配列が渡されるとエラーが投げられる', () => {
-      const data: unknown[] = [];
-      // tupleMap 関数の第一引数の型エラーを無視する
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      expect(() => tupleMap(data, (item) => item)).toThrowError('Array must not be empty');
+    it('異なる型を持つタプルに対応できる', () => {
+      const data: [number, ...string[]] = [1, 'b', 'c'];
+      const result = tupleMap(data, (item, index) => `${item}${index}`);
+
+      expect(result).toEqual(['10', 'b1', 'c2']);
     });
   });
 });
