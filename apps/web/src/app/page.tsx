@@ -9,19 +9,19 @@ import {
 
 const workExperienceData = [
   {
-    description: 'フロントエンド領域のリードエンジニア',
+    description: 'フロントエンド開発',
     label: '2023 — Now',
     tags: ['Next.js', 'TypeScript', 'Lit', 'MUI', 'Node.js', 'Vite', 'Turborepo', 'Docker', 'AWS'],
     title: 'Saasの新規開発',
   },
   {
-    description: 'フロントエンド領域のリードエンジニア',
+    description: 'フロントエンド開発',
     label: '2022 — 2023',
     tags: ['Next.js', 'TypeScript', 'MUI', 'Node.js', 'GraphQL', 'Turborepo', 'Vercel', 'AWS'],
     title: 'BtoC向け新規サービスのプロトタイプ開発',
   },
   {
-    description: 'フロントエンドチームのリードエンジニア',
+    description: 'フロントエンド開発',
     label: '2016 — 2022',
     tags: ['JavaScript', 'Sass', 'jQuery', 'Node.js', 'React', 'Vue.js', 'Gulp', 'Webpack'],
     title: 'HRサービスの開発',
