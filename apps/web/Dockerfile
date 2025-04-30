@@ -23,7 +23,7 @@ RUN pnpm turbo run build --filter=web...
 
 
 FROM installer AS prod
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.0 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1 /lambda-adapter /opt/extensions/lambda-adapter
 ENV PORT=3000
 ENV NODE_ENV=production
 ENV AWS_LWA_ENABLE_COMPRESSION=true
