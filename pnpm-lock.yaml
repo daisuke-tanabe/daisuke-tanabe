@@ -51,8 +51,8 @@ importers:
         specifier: 0.13.0
         version: 0.13.0
       isomorphic-dompurify:
-        specifier: 2.23.0
-        version: 2.23.0
+        specifier: 2.24.0
+        version: 2.24.0
       jsdom:
         specifier: 26.1.0
         version: 26.1.0
@@ -3142,8 +3142,8 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
-  isomorphic-dompurify@2.23.0:
-    resolution: {integrity: sha512-f9w5fPJwlu+VK1uowFy4eWYgd7uxl0nQJbtorGp1OAs6JeY1qPkBQKNee1RXrnr68GqZ86PwQ6LF/5rW1TrOZQ==}
+  isomorphic-dompurify@2.24.0:
+    resolution: {integrity: sha512-SgKoDBCQveodymGMBPpzs9MOTCk4Luq0bTfwoPrUKa7q0FnCLZMtqR25Rnq228zJfMTsX1ZItiJbDtjb2lyv4A==}
     engines: {node: '>=18'}
 
   istanbul-lib-coverage@3.2.2:
@@ -8125,7 +8125,7 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  isomorphic-dompurify@2.23.0:
+  isomorphic-dompurify@2.24.0:
     dependencies:
       dompurify: 3.2.5
       jsdom: 26.1.0
