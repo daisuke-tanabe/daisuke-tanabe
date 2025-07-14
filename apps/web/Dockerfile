@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/node:22.16.0-slim AS base
+FROM public.ecr.aws/docker/library/node:22.17.0-slim AS base
 RUN apt-get -y update && apt-get install -y curl
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
