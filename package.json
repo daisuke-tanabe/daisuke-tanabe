@@ -20,7 +20,7 @@
     "eslint": "9.31.0",
     "prettier": "3.6.2",
     "secretlint": "9.3.4",
-    "turbo": "2.5.4",
+    "turbo": "2.5.5",
     "typescript": "5.8.3"
   }
 }
