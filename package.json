@@ -16,10 +16,10 @@
     "type-check": "turbo type-check"
   },
   "devDependencies": {
-    "@secretlint/secretlint-rule-preset-recommend": "10.2.1",
+    "@secretlint/secretlint-rule-preset-recommend": "10.2.2",
     "eslint": "9.31.0",
     "prettier": "3.6.2",
-    "secretlint": "10.2.1",
+    "secretlint": "10.2.2",
     "turbo": "2.5.5",
     "typescript": "5.8.3"
   }
