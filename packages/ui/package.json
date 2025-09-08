@@ -23,13 +23,13 @@
     "tailwindcss-animate": "1.0.7"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.1.12",
+    "@tailwindcss/postcss": "4.1.13",
     "@types/node": "22.17.2",
     "@types/react": "19.1.12",
     "@types/react-dom": "19.1.9",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "tailwindcss": "4.1.12"
+    "tailwindcss": "4.1.13"
   },
   "exports": {
     "./globals.css": "./src/styles/globals.css",
