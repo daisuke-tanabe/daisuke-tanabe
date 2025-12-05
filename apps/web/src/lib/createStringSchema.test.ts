@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { createStringSchema } from './createStringSchema';
 
 describe('createStringSchema 関数', () => {

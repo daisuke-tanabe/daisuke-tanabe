@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { tupleMap } from './tupleMap';
 
 describe('tupleMap 関数', () => {
