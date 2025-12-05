@@ -1,3 +1,5 @@
+'use client';
+
 import { ImgHTMLAttributes } from 'react';
 
 import { Extendable } from '@/types';

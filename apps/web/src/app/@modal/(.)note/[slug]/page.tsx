@@ -8,7 +8,7 @@ import React, { CSSProperties } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-import { Page } from '@/app/@modal/(.)note/[slug]/_page';
+import { Page } from '@/app/@modal/(.)note/[slug]/_features/Page';
 
 type Post = {
   title: string;

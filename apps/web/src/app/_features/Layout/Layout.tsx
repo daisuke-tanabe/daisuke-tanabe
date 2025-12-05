@@ -5,8 +5,8 @@ import { ReactNode } from 'react';
 import Image from '@/app/_components/Image';
 import { Button } from '@/components/primitives';
 
-import { ModeToggle } from './ModeToggle';
-import { Navigation } from './Navigation';
+import { ModeToggle } from './ModeToggle.client';
+import { Navigation } from './Navigation.client';
 
 type LayoutProps = Readonly<{
   children: ReactNode;

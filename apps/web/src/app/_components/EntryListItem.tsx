@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowUpRight } from 'lucide-react';
 import NextLink from 'next/link';
 
@@ -33,7 +35,7 @@ export function EntryListItem({ description, link, label, tags, title }: EntryLi
           <p className="text-sm leading-[1.6]">{title}</p>
         )}
         <p className="text-sm text-muted-foreground leading-[1.6]">{description}</p>
-        {tags && tags?.length > 0 && (
+        {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-1.5">
             {tags.map((tag, index) => {
               return (
