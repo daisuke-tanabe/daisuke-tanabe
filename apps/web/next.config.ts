@@ -1,9 +1,10 @@
 import { join } from 'node:path';
 
+import type { NextConfig } from 'next';
+
 const isProd = process.env.NODE_ENV === 'production';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   ...(isProd && {
     compiler: {
       removeConsole: {
@@ -20,10 +21,8 @@ const nextConfig = {
   outputFileTracingRoot: join(import.meta.dirname, '../../'),
   poweredByHeader: false,
   transpilePackages: ['@workspace/ui'],
-  experimental: {
-    // https://nextjs.org/docs/app/api-reference/config/next-config-js/reactCompiler
-    reactCompiler: true,
-  },
+  // https://nextjs.org/docs/app/api-reference/config/next-config-js/reactCompiler
+  reactCompiler: true,
 };
 
 export default nextConfig;

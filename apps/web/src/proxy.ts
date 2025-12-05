@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export function middleware() {
+export function proxy() {
   const response = NextResponse.next();
 
   // SSRリクエストに対して Cache-Control ヘッダーを追加
