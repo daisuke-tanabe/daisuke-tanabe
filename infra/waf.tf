@@ -1,7 +1,7 @@
 resource "aws_wafv2_web_acl" "daisuke_tanabe_web_waf" {
-  provider    = aws.use1  # WAF は us-east-1 に作成
-  name        = "daisuke_tanabe"
-  scope       = "CLOUDFRONT"
+  provider = aws.use1 # WAF は us-east-1 に作成
+  name     = "daisuke_tanabe"
+  scope    = "CLOUDFRONT"
 
   default_action {
     allow {}
@@ -17,7 +17,7 @@ resource "aws_wafv2_web_acl" "daisuke_tanabe_web_waf" {
 
     statement {
       rate_based_statement {
-        limit              = 1000  # 1000リクエスト/5分
+        limit              = 1000 # 1000リクエスト/5分
         aggregate_key_type = "IP"
       }
     }

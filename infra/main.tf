@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.12.2"
+  required_version = ">= 1.14.0"
 
   required_providers {
     aws = {
@@ -29,12 +29,12 @@ provider "aws" {
 }
 
 module "github_oidc" {
-  source              = "./modules/github_oidc"
-  github_repo         = var.gibhub_repo
-  aws_account_id      = var.aws_sso_account_id
-  lambda_arn          = aws_lambda_function.daisuke_tanabe_lambda.arn
-  cloud_front_arn     = aws_cloudfront_distribution.daisuke_tanabe_web_cloudfront.arn
-  s3_bucket_name      = "${var.bucket_name}-${random_id.suffix.hex}"
+  source          = "./modules/github_oidc"
+  github_repo     = var.github_repo
+  aws_account_id  = var.aws_sso_account_id
+  lambda_arn      = aws_lambda_function.daisuke_tanabe_lambda.arn
+  cloud_front_arn = aws_cloudfront_distribution.daisuke_tanabe_web_cloudfront.arn
+  s3_bucket_name  = "${var.bucket_name}-${random_id.suffix.hex}"
 }
 
 resource "aws_iam_role_policy" "daisuke_tanabe_policy" {
@@ -45,20 +45,10 @@ resource "aws_iam_role_policy" "daisuke_tanabe_policy" {
     Statement = [
       {
         Action = [
-          "logs:CreateLogGroup"
-        ]
-        Effect   = "Allow"
-        Resource = format("arn:aws:logs:%s:%s:*",
-          var.aws_region,
-          var.aws_sso_account_id,
-        )
-      },
-      {
-        Action = [
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ]
-        Effect   = "Allow"
+        Effect = "Allow"
         Resource = format("arn:aws:logs:%s:%s:log-group:/aws/lambda/%s:*",
           var.aws_region,
           var.aws_sso_account_id,

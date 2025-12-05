@@ -52,8 +52,8 @@ jobs:
           mkdir -p ./dist/_next
           docker cp extract-container:/app/apps/web/.next/static ./dist/_next/static
           docker cp extract-container:/app/apps/web/public/. ./dist
-          docker tag ${{secrets.AWS_ECR_REPO_NAME}}:latest ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest
-          docker push ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest
+          docker tag ${{secrets.AWS_ECR_REPO_NAME}}:latest ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:${{ github.sha }}
+          docker push ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:${{ github.sha }}
           docker rm extract-container
 
       - name: Upload to S3
@@ -64,7 +64,7 @@ jobs:
         run: |
           aws lambda update-function-code \
             --function-name ${{secrets.AWS_LAMBDA_FUNC_NAME}} \
-            --image-uri ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:latest
+            --image-uri ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{secrets.AWS_ECR_REPO_NAME}}:${{ github.sha }}
 
       # すべてのキャッシュを削除するため将来的にはコストを考えて調整する
       - name: Invalidate CloudFront Cache

@@ -44,15 +44,15 @@ resource "aws_iam_policy" "github_actions_ecr_policy" {
         Resource = "*"
       },
       {
-        Effect   = "Allow"
-        Action   = [
+        Effect = "Allow"
+        Action = [
           "ecr:BatchCheckLayerAvailability",
           "ecr:PutImage",
           "ecr:InitiateLayerUpload",
           "ecr:UploadLayerPart",
           "ecr:CompleteLayerUpload",
           "ecr:GetDownloadUrlForLayer", # docker/build-push-action@v6 で必要
-          "ecr:BatchGetImage" # docker/build-push-action@v6 で必要
+          "ecr:BatchGetImage"           # docker/build-push-action@v6 で必要
         ]
         Resource = "arn:aws:ecr:ap-northeast-1:${var.aws_account_id}:repository/daisuke-tanabe/web"
       }
@@ -69,8 +69,8 @@ resource "aws_iam_policy" "github_actions_lambda_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = [
+        Effect = "Allow"
+        Action = [
           "lambda:UpdateFunctionCode"
         ]
         Resource = var.lambda_arn
@@ -88,8 +88,8 @@ resource "aws_iam_policy" "github_actions_cloud_front_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = [
+        Effect = "Allow"
+        Action = [
           "cloudfront:CreateInvalidation"
         ]
         Resource = var.cloud_front_arn
@@ -107,8 +107,8 @@ resource "aws_iam_policy" "s3_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = ["s3:PutObject", "s3:GetObject", "s3:ListBucket", "s3:DeleteObject"]
+        Effect = "Allow"
+        Action = ["s3:PutObject", "s3:GetObject", "s3:ListBucket", "s3:DeleteObject"]
         Resource = [
           "arn:aws:s3:::${var.s3_bucket_name}",
           "arn:aws:s3:::${var.s3_bucket_name}/*"

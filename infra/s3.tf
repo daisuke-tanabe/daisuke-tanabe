@@ -5,10 +5,38 @@ resource "random_id" "suffix" {
 resource "aws_s3_bucket" "daisuke_tanabe_web_s3" {
   bucket = "${var.bucket_name}-${random_id.suffix.hex}"
 
-  # OAIを使ってCloudFrontのアクセスを許可
   lifecycle {
     prevent_destroy = true
   }
+}
+
+#--------------------------------------------------------------
+# Logs bucket
+#--------------------------------------------------------------
+resource "aws_s3_bucket" "logs" {
+  bucket = "${var.bucket_name}-logs-${random_id.suffix.hex}"
+}
+
+resource "aws_s3_bucket_public_access_block" "logs" {
+  bucket                  = aws_s3_bucket.logs.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_ownership_controls" "logs" {
+  bucket = aws_s3_bucket.logs.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "logs" {
+  depends_on = [aws_s3_bucket_ownership_controls.logs]
+  bucket     = aws_s3_bucket.logs.id
+  acl        = "private"
 }
 
 resource "aws_s3_bucket_public_access_block" "this" {
@@ -20,8 +48,8 @@ resource "aws_s3_bucket_public_access_block" "this" {
 }
 
 resource "aws_s3_account_public_access_block" "this" {
-  block_public_acls   = false
-  block_public_policy = false
+  block_public_acls   = true
+  block_public_policy = true
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "daisuke_tanabe_web_s3" {
@@ -36,10 +64,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "daisuke_tanabe_we
   }
 }
 
-resource "aws_cloudfront_origin_access_identity" "daisuke_tanabe_oai" {
-  comment = "CloudFront OAI for S3 access"
-}
-
 resource "aws_s3_bucket_policy" "s3_bucket_policy" {
   bucket = aws_s3_bucket.daisuke_tanabe_web_s3.id
 
@@ -47,12 +71,17 @@ resource "aws_s3_bucket_policy" "s3_bucket_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect    = "Allow"
+        Effect = "Allow"
         Principal = {
-          AWS = aws_cloudfront_origin_access_identity.daisuke_tanabe_oai.iam_arn
+          Service = "cloudfront.amazonaws.com"
         }
-        Action    = "s3:GetObject"
-        Resource  = "${aws_s3_bucket.daisuke_tanabe_web_s3.arn}/*"
+        Action   = "s3:GetObject"
+        Resource = "${aws_s3_bucket.daisuke_tanabe_web_s3.arn}/*"
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = aws_cloudfront_distribution.daisuke_tanabe_web_cloudfront.arn
+          }
+        }
       }
     ]
   })

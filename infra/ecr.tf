@@ -1,6 +1,6 @@
 resource "aws_ecr_repository" "daisuke_tanabe_web_ecr" {
-  name = "daisuke-tanabe/web"
-  image_tag_mutability = "MUTABLE"
+  name                 = "daisuke-tanabe/web"
+  image_tag_mutability = "IMMUTABLE"
 
   encryption_configuration {
     encryption_type = "AES256"

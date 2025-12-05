@@ -15,6 +15,10 @@ variable "aws_region" {
 
 variable "bucket_name" {}
 
-variable "gibhub_repo" {
+variable "github_repo" {
   default = "daisuke-tanabe/daisuke-tanabe"
+}
+
+variable "acm_certificate_id" {
+  description = "ACM certificate ID for CloudFront"
 }

@@ -1,13 +1,20 @@
-resource "aws_cloudfront_origin_access_control" "daisuke_tanabe_web_cloudfront_oac" {
-  name                              = "daisuke-tanabe"
+resource "aws_cloudfront_origin_access_control" "lambda_oac" {
+  name                              = "daisuke-tanabe-lambda"
   origin_access_control_origin_type = "lambda"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
+resource "aws_cloudfront_origin_access_control" "s3_oac" {
+  name                              = "daisuke-tanabe-s3"
+  origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
 
 locals {
   lambda_origin_id = "lambda-origin"
-  s3_origin_id = "s3-origin"
+  s3_origin_id     = "s3-origin"
 }
 
 resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
@@ -18,9 +25,9 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
   aliases         = ["daisuke-tanabe.dev"]
 
   origin {
-    domain_name = split("/", trimprefix(aws_lambda_function_url.nextjs_on_lambda.function_url, "https://"))[0]
-    origin_access_control_id = aws_cloudfront_origin_access_control.daisuke_tanabe_web_cloudfront_oac.id
-    origin_id = local.lambda_origin_id
+    domain_name              = split("/", trimprefix(aws_lambda_function_url.nextjs_on_lambda.function_url, "https://"))[0]
+    origin_access_control_id = aws_cloudfront_origin_access_control.lambda_oac.id
+    origin_id                = local.lambda_origin_id
 
     custom_origin_config {
       http_port              = 80
@@ -31,43 +38,40 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
   }
 
   origin {
-    domain_name = aws_s3_bucket.daisuke_tanabe_web_s3.bucket_regional_domain_name
-    origin_id   = local.s3_origin_id
-
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.daisuke_tanabe_oai.cloudfront_access_identity_path
-    }
+    domain_name              = aws_s3_bucket.daisuke_tanabe_web_s3.bucket_regional_domain_name
+    origin_id                = local.s3_origin_id
+    origin_access_control_id = aws_cloudfront_origin_access_control.s3_oac.id
   }
 
   default_cache_behavior {
-    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
-    cached_methods             = ["GET", "HEAD"]
-    target_origin_id           = local.lambda_origin_id
-    cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_default_cache_policy.id
-    origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_default_request_policy.id
-    viewer_protocol_policy     = "redirect-to-https"
+    allowed_methods          = ["GET", "HEAD", "OPTIONS"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = local.lambda_origin_id
+    cache_policy_id          = aws_cloudfront_cache_policy.daisuke_tanabe_web_default_cache_policy.id
+    origin_request_policy_id = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_default_request_policy.id
+    viewer_protocol_policy   = "redirect-to-https"
   }
 
   ordered_cache_behavior {
-    path_pattern               = "/_next/static/*"
-    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
-    cached_methods             = ["GET", "HEAD"]
-    target_origin_id           = local.s3_origin_id
-    cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_next_static_cache_policy.id
-    origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_assets_request_policy.id
-    compress                   = true
-    viewer_protocol_policy     = "redirect-to-https"
+    path_pattern             = "/_next/static/*"
+    allowed_methods          = ["GET", "HEAD", "OPTIONS"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = local.s3_origin_id
+    cache_policy_id          = aws_cloudfront_cache_policy.daisuke_tanabe_web_next_static_cache_policy.id
+    origin_request_policy_id = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_assets_request_policy.id
+    compress                 = true
+    viewer_protocol_policy   = "redirect-to-https"
   }
 
   ordered_cache_behavior {
-    path_pattern               = "/images/*"
-    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
-    cached_methods             = ["GET", "HEAD"]
-    target_origin_id           = local.s3_origin_id
-    cache_policy_id            = aws_cloudfront_cache_policy.daisuke_tanabe_web_images_cache_policy.id
-    origin_request_policy_id   = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_assets_request_policy.id
-    compress                   = true
-    viewer_protocol_policy     = "redirect-to-https"
+    path_pattern             = "/images/*"
+    allowed_methods          = ["GET", "HEAD", "OPTIONS"]
+    cached_methods           = ["GET", "HEAD"]
+    target_origin_id         = local.s3_origin_id
+    cache_policy_id          = aws_cloudfront_cache_policy.daisuke_tanabe_web_images_cache_policy.id
+    origin_request_policy_id = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_assets_request_policy.id
+    compress                 = true
+    viewer_protocol_policy   = "redirect-to-https"
   }
 
   restrictions {
@@ -77,12 +81,18 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "arn:aws:acm:us-east-1:${var.aws_sso_account_id}:certificate/6a00c25f-81bd-4e0f-bf93-ba816e4200d5"
+    acm_certificate_arn      = "arn:aws:acm:us-east-1:${var.aws_sso_account_id}:certificate/${var.acm_certificate_id}"
     minimum_protocol_version = "TLSv1.2_2021"
-    ssl_support_method = "sni-only"
+    ssl_support_method       = "sni-only"
   }
 
-  web_acl_id = aws_wafv2_web_acl.daisuke_tanabe_web_waf.arn # WAF を CloudFront に適用
+  web_acl_id = aws_wafv2_web_acl.daisuke_tanabe_web_waf.arn
+
+  logging_config {
+    include_cookies = false
+    bucket          = aws_s3_bucket.logs.bucket_domain_name
+    prefix          = "cloudfront/"
+  }
 }
 
 # デフォルトキャッシュポリシー
@@ -113,14 +123,14 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_default_cache_policy"
       }
     }
 
-    enable_accept_encoding_gzip = true
+    enable_accept_encoding_gzip   = true
     enable_accept_encoding_brotli = true
   }
 }
 
 # デフォルトオリジンリクエストポリシー
 resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_web_default_request_policy" {
-  name    = "DaisukeTanabeWebDefaultRequestPolicy"
+  name = "DaisukeTanabeWebDefaultRequestPolicy"
 
   cookies_config {
     cookie_behavior = "all"
@@ -140,7 +150,7 @@ resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_web_default_requ
 
 # アセットオリジンリクエストポリシー
 resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_web_assets_request_policy" {
-  name    = "DaisukeTanabeWebAssetsRequestPolicy"
+  name = "DaisukeTanabeWebAssetsRequestPolicy"
 
   cookies_config {
     cookie_behavior = "none"
@@ -164,7 +174,7 @@ resource "aws_cloudfront_origin_request_policy" "daisuke_tanabe_web_assets_reque
 
 # NextStaticキャッシュポリシー
 resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_next_static_cache_policy" {
-  name    = "NextStaticCaching"
+  name        = "NextStaticCaching"
   min_ttl     = 0
   max_ttl     = 31536000
   default_ttl = 86400
@@ -182,14 +192,14 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_next_static_cache_pol
       query_string_behavior = "none"
     }
 
-    enable_accept_encoding_gzip = true
+    enable_accept_encoding_gzip   = true
     enable_accept_encoding_brotli = true
   }
 }
 
 # imagesキャッシュポリシー
 resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_images_cache_policy" {
-  name    = "ImagesCaching"
+  name        = "ImagesCaching"
   min_ttl     = 0
   max_ttl     = 31536000
   default_ttl = 86400
@@ -207,7 +217,7 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_images_cache_policy" 
       query_string_behavior = "none"
     }
 
-    enable_accept_encoding_gzip = true
+    enable_accept_encoding_gzip   = true
     enable_accept_encoding_brotli = true
   }
 }
