@@ -68,7 +68,7 @@ const options: HTMLReactParserOptions = {
   },
 };
 
-export default async function PostByIdPage({ params }: { params: Promise<Post> }) {
+export default async function Page({ params }: { params: Promise<Post> }) {
   const { slug } = await params;
 
   const filePath = path.join(process.cwd(), 'data/json', `${slug}.json`);

@@ -8,7 +8,7 @@ import React, { CSSProperties } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-import { Page } from '@/app/@modal/(.)note/[slug]/_features/Page';
+import { Page as ModalPage } from '@/app/@modal/(.)note/[slug]/_features/Page';
 
 type Post = {
   title: string;
@@ -71,7 +71,7 @@ const options: HTMLReactParserOptions = {
   },
 };
 
-export default async function PostByIdPage({ params }: { params: Promise<Post> }) {
+export default async function Page({ params }: { params: Promise<Post> }) {
   const { slug } = await params;
 
   const filePath = path.join(process.cwd(), 'data/json', `${slug}.json`);
@@ -81,8 +81,8 @@ export default async function PostByIdPage({ params }: { params: Promise<Post> }
   const sanitizedHtml = DOMPurify.sanitize(data.content);
 
   return (
-    <Page title={data.title} publishedAt={data.published_at}>
+    <ModalPage title={data.title} publishedAt={data.published_at}>
       <div className="markdown-content">{parse(sanitizedHtml, options)}</div>
-    </Page>
+    </ModalPage>
   );
 }

@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import { Lato, Zen_Kaku_Gothic_New } from 'next/font/google';
 import { ReactNode } from 'react';
 
-import { Layout } from '@/app/_features/Layout';
+import { AppShell } from '@/app/_features/AppShell';
 import { ThemeProvider } from '@/app/_providers';
 
 const zenKakuGothicNew = Zen_Kaku_Gothic_New({
@@ -34,17 +34,17 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
-type RootLayoutProps = Readonly<{
+type RootLayoutProps = {
   children: ReactNode;
   modal: ReactNode;
-}>;
+};
 
-export default function RootLayout({ children, modal }: RootLayoutProps) {
+export default function Layout({ children, modal }: RootLayoutProps) {
   return (
     <html lang="ja" suppressHydrationWarning>
       <body className={`${zenKakuGothicNew.variable} ${lato.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Layout>{children}</Layout>
+          <AppShell>{children}</AppShell>
           {modal}
         </ThemeProvider>
       </body>

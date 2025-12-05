@@ -58,7 +58,7 @@ const outputData = [
   },
 ];
 
-export default function HomePage() {
+export default function Page() {
   return (
     <BlockSectionGroup>
       <BlockSection>

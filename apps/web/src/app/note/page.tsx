@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Daisuke Tanabe のポートフォリオサイトに掲載された投稿一覧です。',
 };
 
-export default function PostsPage() {
+export default function Page() {
   return (
     <BlockSectionGroup>
       <BlockSection>
