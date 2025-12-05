@@ -22,10 +22,10 @@ const processor = unified()
   .use(remarkRehype)
   .use(rehypeStringify);
 
-const files = fs.readdirSync('docs/markdown');
+const files = fs.readdirSync('data/markdown');
 
 const allPosts = files.map(async (file) => {
-  const markdownFile = fs.readFileSync(`docs/markdown/${file}`);
+  const markdownFile = fs.readFileSync(`data/markdown/${file}`);
   const result = await processor.process(markdownFile);
 
   const { meta } = result.data as {
@@ -51,7 +51,7 @@ const allPosts = files.map(async (file) => {
   });
 
   // 個別にJSONファイルを出力
-  fs.writeFileSync(`docs/json/${file.replace('.md', '')}.json`, jsonData);
+  fs.writeFileSync(`data/json/${file.replace('.md', '')}.json`, jsonData);
 
   const description = DOMPurify.sanitize(result.value.toString(), {
     ALLOWED_TAGS: [],
@@ -75,4 +75,4 @@ const data = await Promise.all(allPosts);
 const sortedData = data.sort((a, b) => {
   return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 });
-fs.writeFileSync(`docs/json/data.json`, JSON.stringify(sortedData));
+fs.writeFileSync(`data/json/data.json`, JSON.stringify(sortedData));

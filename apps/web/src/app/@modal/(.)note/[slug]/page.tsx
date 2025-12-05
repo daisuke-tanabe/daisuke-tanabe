@@ -21,12 +21,12 @@ type Post = {
 };
 
 export function generateStaticParams() {
-  const jsonDir = path.join(process.cwd(), 'docs/json/data.json');
+  const jsonDir = path.join(process.cwd(), 'data/json/data.json');
   const files = fs.readFileSync(jsonDir, 'utf-8');
   const postsData = JSON.parse(files) as Post[];
 
   const data = postsData.map((file) => {
-    const filePath = path.join(process.cwd(), 'docs/json', `${file.slug}.json`);
+    const filePath = path.join(process.cwd(), 'data/json', `${file.slug}.json`);
     const result = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(result) as Post;
   });
@@ -74,7 +74,7 @@ const options: HTMLReactParserOptions = {
 export default async function PostByIdPage({ params }: { params: Promise<Post> }) {
   const { slug } = await params;
 
-  const filePath = path.join(process.cwd(), 'docs/json', `${slug}.json`);
+  const filePath = path.join(process.cwd(), 'data/json', `${slug}.json`);
   const result = fs.readFileSync(filePath, 'utf-8');
   const data = JSON.parse(result) as Post;
 
