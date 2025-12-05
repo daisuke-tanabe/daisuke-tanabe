@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "exports": {
-    "./next-js": "./next.js",
-    "./react-internal": "./react-internal.js"
+    "./next-js": "./next.js"
   },
   "devDependencies": {
     "eslint-config-next": "16.0.7",

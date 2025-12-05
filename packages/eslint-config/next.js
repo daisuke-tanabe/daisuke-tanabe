@@ -64,10 +64,10 @@ export default defineConfig([
           selector: ['typeLike'],
           format: ['PascalCase'],
         },
-        // classMethod, objectLiteralMethod, typeMethod, function, parameter, variable
+        // classMethod, objectLiteralMethod, typeMethod
         // https://typescript-eslint.io/rules/naming-convention/#group-selectors
         {
-          selector: ['method', 'variableLike'],
+          selector: ['method'],
           format: ['camelCase'],
         },
         // 関数パラメーターは先頭のアンダースコアを許容する
@@ -78,7 +78,7 @@ export default defineConfig([
         },
         // 関数コンポーネントが存在するのでキャメルケースとパスカルケースの両方を許可する
         {
-          selector: ['function'],
+          selector: ['function', 'variable'],
           format: ['camelCase', 'PascalCase'],
         },
         {

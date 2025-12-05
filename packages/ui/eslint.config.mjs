@@ -1,3 +1,3 @@
-import reactConfig from '@workspace/eslint-config/react-internal';
+import nextJsConfig from '@workspace/eslint-config/next-js';
 
-export default reactConfig;
+export default nextJsConfig;

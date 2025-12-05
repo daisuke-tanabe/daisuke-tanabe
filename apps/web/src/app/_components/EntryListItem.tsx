@@ -11,7 +11,6 @@ export type EntryListItemProps = {
 
 export function EntryListItem({ description, link, label, tags, title }: EntryListItemProps) {
   const hasProtocol = link?.startsWith('https://');
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   const LinkComponent = hasProtocol ? 'a' : NextLink;
   const target = hasProtocol ? '_blank' : undefined;
 
