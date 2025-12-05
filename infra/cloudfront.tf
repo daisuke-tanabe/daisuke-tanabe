@@ -86,8 +86,6 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
     ssl_support_method       = "sni-only"
   }
 
-  web_acl_id = aws_wafv2_web_acl.daisuke_tanabe_web_waf.arn
-
   logging_config {
     include_cookies = false
     bucket          = aws_s3_bucket.logs.bucket_domain_name

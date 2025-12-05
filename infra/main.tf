@@ -22,12 +22,6 @@ provider "aws" {
   }
 }
 
-provider "aws" {
-  alias   = "use1"
-  profile = var.aws_sso_profile
-  region  = "us-east-1" # CloudFront 用 WAF のため us-east-1 を追加
-}
-
 module "github_oidc" {
   source          = "./modules/github_oidc"
   github_repo     = var.github_repo
