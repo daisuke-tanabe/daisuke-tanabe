@@ -2,16 +2,6 @@
 
 @docs/01_core/01_principles.md
 
-## コマンド
-
-```bash
-pnpm build         # ビルド
-pnpm dev           # 開発サーバー
-pnpm format        # Prettier 整形
-pnpm lint          # ESLint
-pnpm lint-fix      # ESLint 自動修正
-```
-
 ## 開発
 
 @docs/02_development/01_coding-guidelines.md
