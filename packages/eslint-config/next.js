@@ -7,6 +7,7 @@ import typeScriptESLintParser from '@typescript-eslint/parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import turboPlugin from 'eslint-plugin-turbo';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -36,29 +37,19 @@ export default tseslint.config(
       ...compat.extends('next/core-web-vitals'),
     ],
     plugins: {
+      'simple-import-sort': simpleImportSort,
       turbo: turboPlugin,
     },
     rules: {
-      // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md
-      'import/order': [
-        'error',
-        {
-          groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'object', 'type'],
-          pathGroups: [
-            {
-              pattern: '@/**',
-              group: 'parent',
-              position: 'before',
-            },
-          ],
-          pathGroupsExcludedImportTypes: ['builtin', 'external', 'object', 'type'],
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-          'newlines-between': 'always',
-        },
-      ],
+      // https://github.com/lydell/eslint-plugin-simple-import-sort
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+
+      // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-unresolved.md
+      'import/no-unresolved': 'error',
+
+      // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-unused-modules.md
+      'import/no-unused-modules': 'warn',
 
       // https://eslint.org/docs/latest/rules/no-unused-vars
       'no-unused-vars': 'off',
