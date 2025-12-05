@@ -1,41 +1,20 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import eslint from '@eslint/js';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import typeScriptESLintParser from '@typescript-eslint/parser';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTypescript from 'eslint-config-next/typescript';
+import prettier from 'eslint-config-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import turboPlugin from 'eslint-plugin-turbo';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-export default tseslint.config(
+export default defineConfig([
+  ...nextCoreWebVitals,
+  ...nextTypescript,
+  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
   {
     languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.jest,
-      },
-      parser: typeScriptESLintParser,
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: __dirname,
       },
     },
-    extends: [
-      eslint.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
-      tseslint.configs.stylisticTypeChecked,
-      ...compat.extends('next/core-web-vitals'),
-    ],
     plugins: {
       'simple-import-sort': simpleImportSort,
       turbo: turboPlugin,
@@ -155,6 +134,5 @@ export default tseslint.config(
       '@typescript-eslint/require-await': 'error',
     },
   },
-
-  eslintConfigPrettier,
-);
+  prettier,
+]);

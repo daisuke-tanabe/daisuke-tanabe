@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-import parse, { DOMNode,domToReact, Element, HTMLReactParserOptions } from 'html-react-parser';
+import parse, { DOMNode, domToReact, Element, HTMLReactParserOptions } from 'html-react-parser';
 import DOMPurify from 'isomorphic-dompurify';
 import NextLink from 'next/link';
 import path from 'path';

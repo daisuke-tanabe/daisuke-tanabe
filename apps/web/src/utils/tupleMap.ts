@@ -27,4 +27,3 @@ export function tupleMap<TArray extends readonly [unknown, ...unknown[]], TCallb
 ): { [K in keyof TArray]: TCallbackFn } {
   return array.map(callbackFn) as { [K in keyof TArray]: TCallbackFn };
 }
-
