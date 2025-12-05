@@ -1,12 +1,12 @@
-import '@workspace/ui/globals.css';
+import '@/styles/globals.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { ThemeProvider } from '@workspace/ui/providers';
 import { Metadata } from 'next';
 import { Lato, Zen_Kaku_Gothic_New } from 'next/font/google';
 import { ReactNode } from 'react';
 
 import { Layout } from '@/app/_layout/Layout';
+import { ThemeProvider } from '@/components/primitives';
 
 const zenKakuGothicNew = Zen_Kaku_Gothic_New({
   subsets: ['latin'],

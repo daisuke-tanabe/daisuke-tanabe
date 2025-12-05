@@ -1,6 +1,7 @@
-import { Button } from '@workspace/ui/components';
 import { Metadata } from 'next';
 import NextLink from 'next/link';
+
+import { Button } from '@/components/primitives';
 
 export const metadata: Metadata = {
   title: 'Not Found',

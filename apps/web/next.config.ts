@@ -20,7 +20,6 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   outputFileTracingRoot: join(import.meta.dirname, '../../'),
   poweredByHeader: false,
-  transpilePackages: ['@workspace/ui'],
   // https://nextjs.org/docs/app/api-reference/config/next-config-js/reactCompiler
   reactCompiler: true,
 };

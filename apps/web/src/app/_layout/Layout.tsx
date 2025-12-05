@@ -1,9 +1,9 @@
-import { Button } from '@workspace/ui/components';
 import { Github } from 'lucide-react';
 import NextLink from 'next/link';
 import { ReactNode } from 'react';
 
 import Image from '@/app/_components/Image';
+import { Button } from '@/components/primitives';
 
 import { ModeToggle } from './ModeToggle';
 import { Navigation } from './Navigation';

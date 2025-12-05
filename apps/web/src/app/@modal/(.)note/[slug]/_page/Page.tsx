@@ -1,9 +1,10 @@
 'use client';
 
 import { format } from '@formkit/tempo';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@workspace/ui/components';
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/primitives';
 
 type PageProps = {
   children: ReactNode;
