@@ -7,8 +7,27 @@ RUN npm install -g pnpm@10.6.2
 
 FROM base AS builder
 WORKDIR /app
-COPY . .
+
+# 変更頻度の低いファイルを先にコピー
+COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml ./
+COPY turbo.json ./
+COPY package.json ./
+
+# パッケージ設定をコピー
+COPY packages/eslint-config/package.json ./packages/eslint-config/
+COPY packages/typescript-config/package.json ./packages/typescript-config/
+
+# アプリ設定をコピー
+COPY apps/web/package.json ./apps/web/
+
+# Turbo をインストール
 RUN pnpm add -g turbo@2.4.4
+
+# ソースコードをコピー（最後に）
+COPY packages/ ./packages/
+COPY apps/web/ ./apps/web/
+
 RUN turbo prune web --docker
 
 

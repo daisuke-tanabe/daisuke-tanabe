@@ -1,0 +1,9 @@
+node_modules
+.next
+.turbo
+.git
+.github
+.vscode
+dist
+coverage
+*.log
