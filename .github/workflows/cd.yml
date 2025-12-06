@@ -17,7 +17,7 @@ jobs:
 
   deploy:
     needs: [ci]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       id-token: write  # OIDC トークンの取得を許可
       contents: read   # リポジトリの内容を読み取る
@@ -41,14 +41,9 @@ jobs:
         with:
           registry: ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com
 
-      # linux/arm64 でビルドするために QEMU をセットアップする
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      # docker/build-push-action@v6 でプラットフォームを linux/arm64 でビルドすると linux/amd64 のマニフェストが求められてエラーになるため自前のシェルで実行する
       - name: Build Next.js with Docker
         run: |
-          docker build --platform linux/arm64 -t ${{secrets.AWS_ECR_REPO_NAME}} . -f ./apps/web/Dockerfile
+          docker build -t ${{secrets.AWS_ECR_REPO_NAME}} . -f ./apps/web/Dockerfile
           docker create --name extract-container ${{secrets.AWS_ECR_REPO_NAME}}
           mkdir -p ./dist/_next
           docker cp extract-container:/app/apps/web/.next/static ./dist/_next/static
