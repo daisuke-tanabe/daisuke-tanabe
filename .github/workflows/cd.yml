@@ -1,5 +1,5 @@
 name: cd
-run-name: ${{ github.event.head_commit.message }}
+run-name: ${{ github.sha }}
 
 # 2023年2月より、GitHub は新規リポジトリのデフォルトの GitHub Actions 権限を read-only に変更しました。
 # しかし、古いリポジトリ（2023年2月以前に作成されたもの）は デフォルトで read-write の権限を持っている可能性があります。
