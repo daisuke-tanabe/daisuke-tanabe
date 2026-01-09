@@ -35,10 +35,12 @@ primitives は基盤となるため「軽く・薄く」保ち、features に近
 | primitives     | 必須             |
 | patterns       | 必須             |
 | src/features   | 状況に応じて分離 |
-| src/hooks      | 必須             |
+| src/hooks      | 不要             |
+| src/stores     | 必須             |
 | \_components   | 必須             |
 | \_features     | 状況に応じて分離 |
-| \_hooks        | 必須             |
+| \_hooks        | 不要             |
+| \_stores       | 必須             |
 | \_providers    | 必須             |
 
 ## 命名規則
@@ -64,7 +66,7 @@ src 配下および app 配下に適用する。
 
 - 再利用性の高い原始的なコンポーネントを配置する
 - shadcn/ui のコンポーネントはここに格納する
-- ファイルは直下にフラット配置し、`index.ts` で一括 export する
+- ディレクトリ構成で管理し、`index.ts` で一括 export する
 - すべてのファイルに `'use client'` を付与する
 
 **理由**: UI の最小単位は server 最適化のメリットがほぼない。
@@ -86,7 +88,7 @@ src 配下および app 配下に適用する。
 
 - 複数の primitives を組み合わせたコンポーネントを配置する
 - UI の構造や体験を組み立てる役割を担う
-- ファイルは直下にフラット配置し、`index.ts` で一括 export する
+- ディレクトリ構成で管理し、`index.ts` で一括 export する
 - すべてのファイルに `'use client'` を付与する
 
 **理由**: UI 連携レイヤはインタラクションを前提とする。データ取得は上位の feature や page で行い、patterns は UI に専念する。
@@ -104,19 +106,40 @@ src 配下および app 配下に適用する。
 - データ処理・マッピングロジック
 - サーバーコンポーネント（RSC）としての実装
 
+#### 密結合フックのコロケーション
+
+patterns コンポーネントと密結合したフックは、同じディレクトリに配置する。
+これは `src/hooks/` に配置する汎用フックとは異なり、特定のコンポーネントでのみ使用されるフックに適用する。
+
+```
+components/patterns/
+├── NavigationRail/
+│   ├── NavigationRail.tsx
+│   ├── useActiveSection.ts    # 密結合フック（内部実装）
+│   ├── useNavigationRail.ts   # 公開フック
+│   └── index.ts               # 両方をエクスポート
+```
+
 ## src ディレクトリ構成例
 
 ```
 src/
 ├── components/
 │   ├── primitives/
-│   │   ├── Button.tsx
-│   │   ├── Card.tsx
-│   │   ├── Input.tsx
+│   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   └── index.ts
+│   │   ├── Card/
+│   │   │   ├── Card.tsx
+│   │   │   └── index.ts
 │   │   └── index.ts
 │   └── patterns/
-│       ├── SearchForm.tsx
-│       ├── DataTable.tsx
+│       ├── SearchForm/
+│       │   ├── SearchForm.tsx
+│       │   └── index.ts
+│       ├── DataTable/
+│       │   ├── DataTable.tsx
+│       │   └── index.ts
 │       └── index.ts
 ├── features/
 │   ├── UserProfile/
@@ -130,6 +153,16 @@ src/
 ├── hooks/
 │   ├── useDebounce.ts
 │   ├── useLocalStorage.ts
+│   └── index.ts
+├── stores/
+│   ├── me/
+│   │   ├── store.ts
+│   │   ├── useMe.ts
+│   │   └── index.ts
+│   ├── tenant/
+│   │   ├── store.ts
+│   │   ├── useTenant.ts
+│   │   └── index.ts
 │   └── index.ts
 ├── lib/
 │   ├── cn.ts                    # tailwind-merge ラッパー
@@ -195,6 +228,25 @@ src/
 
 例: TanStack Query のカスタムフック（`useQuery` をラップ）→ hooks
 例: Zod スキーマファクトリ → lib
+
+## src/stores
+
+アプリ内で再利用する Zustand ストアを配置する。
+
+- ディレクトリ構成で管理する
+- 各 store 内の `index.ts` によるバレルエクスポートは許可
+- `stores/index.ts`（ディレクトリ直下でのまとめ上げ）は許可
+
+### 許容する責務
+
+- グローバル UI 状態の管理（認証情報、テーマ、トースト等）
+- アプリ横断で共有が必要な状態
+
+### 許容しない責務
+
+- コンポーネントローカルな状態（→ useState）
+- サーバー由来のデータ（→ TanStack Query 等）
+- URL に保存すべき状態（→ nuqs 等）
 
 ## src/lib
 
@@ -347,6 +399,15 @@ src/
 - `index.ts` によるバレルエクスポートは許可
 - 許容する責務・許容しない責務は `src/hooks` と同様
 
+### \_stores
+
+- 当該スコープ専用の Zustand ストアを配置する
+- `_stores/` は兄弟の `page.tsx`・`layout.tsx` 等のスコープに限定する
+- ディレクトリ構成で管理する
+- 各 store 内の `index.ts` によるバレルエクスポートは許可
+- `_stores/index.ts`（ディレクトリ直下でのまとめ上げ）は許可
+- 許容する責務・許容しない責務は `src/stores` と同様
+
 ### \_lib
 
 - 当該スコープ専用の外部ライブラリに依存するユーティリティを配置する
@@ -386,6 +447,12 @@ app/
 │       └── index.ts
 ├── _hooks/
 │   ├── useAppHook.ts
+│   └── index.ts
+├── _stores/
+│   ├── me/
+│   │   ├── store.ts
+│   │   ├── useMe.ts
+│   │   └── index.ts
 │   └── index.ts
 ├── _providers/
 │   ├── ThemeProvider.tsx        # テーマ設定
@@ -486,12 +553,14 @@ export async function SomeFeature({ id, params }: SomeFeatureProps) {
 | `src/components/patterns/`     | ✅ 許可    |                            |
 | `src/features/`                | ❌ 禁止    | 直下のバレルファイル禁止   |
 | `src/hooks/`                   | ✅ 許可    |                            |
+| `src/stores/`                  | ✅ 許可    |                            |
 | `src/lib/`                     | ❌ 禁止    | server-only 問題回避       |
 | `src/types/`                   | ✅ 許可    |                            |
 | `src/utils/`                   | ✅ 許可    |                            |
 | `app/**/_components/`          | ✅ 許可    |                            |
 | `app/**/_features/`            | ❌ 禁止    | 直下のバレルファイル禁止   |
 | `app/**/_hooks/`               | ✅ 許可    |                            |
+| `app/**/_stores/`              | ✅ 許可    |                            |
 | `app/**/_lib/`                 | ❌ 禁止    | 各ファイルを直接インポート |
 | `app/**/_providers/`           | ✅ 許可    |                            |
 | `app/**/_types/`               | ✅ 許可    |                            |
