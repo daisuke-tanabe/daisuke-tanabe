@@ -4,6 +4,17 @@
 
 **原則**: 状態は「効力を持つ最小スコープ」に置く。
 
+## Server / Client の判断（最優先）
+
+状態管理を検討する前に、まず Server Component で完結できるか判断する。
+
+| 条件 | 判断 |
+| ---- | ---- |
+| ユーザー操作・ブラウザ API・localStorage が必要 | Client Component |
+| 上記が不要 | Server Component（状態管理ライブラリ不要） |
+
+**Server でできるなら Server が正解。**
+
 ## 状態の分類
 
 | 分類            | 管理方法              | 例                     |
@@ -52,6 +63,51 @@
 **原則**: 上記以外はグローバルに置かない。
 
 **理由**: グローバルは再描画範囲が広く、責務が曖昧になりやすい。
+
+### Zustand の状態スコープ
+
+| スコープ | 手段 | 例 |
+| -------- | ---- | -- |
+| コンポーネント内 | useState / useReducer | フォーム入力、モーダル開閉 |
+| ページ配下 + 永続化 | Zustand + Provider | chartTimeAxis |
+| アプリ全体 + 永続化 | Zustand（直接 create） | tableColumn |
+| Server 初期値注入 | Zustand + Provider | me, tenant |
+
+### Zustand 実装パターン
+
+#### A. Server 初期値注入（me, tenant）
+
+Server Component でデータ取得 → Provider で注入 → Client で利用。
+
+```
+layout.tsx (Server)
+  ↓ fetch
+Provider (value={initialState})
+  ↓ Context
+useXxx() hook (Client)
+```
+
+**実装ファイル**:
+- `src/stores/xxx/store.ts` - Factory 関数 `createXxxStore(initState)`
+- `_providers/XxxStoreProvider.tsx` - useRef で生成
+- `src/stores/xxx/useXxx.ts` - Context 経由でアクセス
+
+#### B. ページスコープ + 永続化（chartTimeAxis）
+
+特定ページ内でのみ使用、localStorage に永続化。
+
+**実装ファイル**:
+- `_stores/xxx/store.ts` - Factory 関数 `createXxxStore()` + persist
+- `_providers/XxxStoreProvider.tsx` - useRef で生成
+- `_stores/xxx/useXxx.ts` - Context 経由でアクセス
+
+#### C. アプリ全体 + 永続化（tableColumn）
+
+複数ページで共有、localStorage に永続化。
+
+**実装ファイル**:
+- `src/stores/xxx/store.ts` - 直接 `createStore()` + persist
+- Provider 不要（グローバルアクセス）
 
 ## Server State
 
@@ -143,3 +199,12 @@ flowchart TD
     Q3 -->|Yes| GlobalUI["Global UI State<br/>(Zustand / Context)"]
     Q3 -->|No| UIState["UI State<br/>(useState)"]
 ```
+
+## NG パターン
+
+| パターン | 理由 |
+| -------- | ---- |
+| 最初から Client Component | Server で完結できないか検討していない |
+| Server で Zustand | Zustand は Client 専用 |
+| ページ限定のつもりで直 create() | スコープを超えてグローバルになる |
+| 何でもグローバル | スコープを意識していない |
