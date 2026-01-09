@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 import NextLink from 'next/link';
 
 import { Button } from '@/components/primitives';

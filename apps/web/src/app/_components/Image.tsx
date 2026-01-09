@@ -1,8 +1,8 @@
 'use client';
 
-import { ImgHTMLAttributes } from 'react';
+import { type ImgHTMLAttributes } from 'react';
 
-import { Extendable } from '@/types';
+import { type Extendable } from '@/types';
 
 export type ImageProps = Extendable<
   ImgHTMLAttributes<HTMLImageElement>,

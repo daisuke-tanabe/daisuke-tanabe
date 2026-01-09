@@ -1,9 +1,9 @@
 import './globals.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 import { Lato, Zen_Kaku_Gothic_New } from 'next/font/google';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import { AppShell } from '@/app/_features/AppShell';
 import { ThemeProvider } from '@/app/_providers';

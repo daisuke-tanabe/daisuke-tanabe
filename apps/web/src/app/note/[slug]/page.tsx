@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 
-import parse, { DOMNode, domToReact, Element, HTMLReactParserOptions } from 'html-react-parser';
+import parse, { type DOMNode, domToReact, Element, type HTMLReactParserOptions } from 'html-react-parser';
 import DOMPurify from 'isomorphic-dompurify';
 import NextLink from 'next/link';
 import path from 'path';
-import React, { CSSProperties } from 'react';
+import React, { type CSSProperties } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 

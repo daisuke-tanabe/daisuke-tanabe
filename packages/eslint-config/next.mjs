@@ -89,6 +89,18 @@ export default defineConfig([
         },
       ],
 
+      // https://typescript-eslint.io/rules/consistent-type-imports/
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
+
+      // https://typescript-eslint.io/rules/no-base-to-string/
+      '@typescript-eslint/no-base-to-string': 'error',
+
+      // https://typescript-eslint.io/rules/no-duplicate-type-constituents/
+      '@typescript-eslint/no-duplicate-type-constituents': 'error',
+
       // https://typescript-eslint.io/rules/no-floating-promises/
       '@typescript-eslint/no-floating-promises': ['error', { ignoreIIFE: true }],
 
@@ -112,6 +124,12 @@ export default defineConfig([
 
       // https://typescript-eslint.io/rules/prefer-find/
       '@typescript-eslint/prefer-find': 'error',
+
+      // https://typescript-eslint.io/rules/prefer-nullish-coalescing/
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
+
+      // https://typescript-eslint.io/rules/prefer-optional-chain/
+      '@typescript-eslint/prefer-optional-chain': 'error',
 
       // https://typescript-eslint.io/rules/restrict-template-expressions/
       '@typescript-eslint/restrict-template-expressions': [
