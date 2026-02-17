@@ -2,7 +2,7 @@ FROM public.ecr.aws/docker/library/node:22.21.1-slim AS base
 RUN apt-get -y update && apt-get install -y curl
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN npm install -g pnpm@10.6.2
+RUN npm install -g pnpm@10.30.0
 
 
 FROM base AS builder

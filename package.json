@@ -1,7 +1,7 @@
 {
   "name": "daisuke-tanabe",
   "version": "0.0.1",
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.30.0",
   "engines": {
     "node": "24.13.1"
   },
