@@ -1,11 +1,12 @@
 # CLAUDE.md
 
-@docs/01_core/01_principles.md
+## 参考ドキュメント
 
-## 開発
+### コーディングガイドライン
 
-@docs/02_development/01_coding-guidelines.md
-@docs/02_development/02_coding-rules.md
-@docs/02_development/03_structure-rules.md
-@docs/02_development/04_state-management-rules.md
-@docs/02_development/05_architecture.md
+- `docs/coding-guidelines/principles.md` - 設計原則
+- `docs/coding-guidelines/javascript-typescript.md` - JavaScript / TypeScript
+
+### コーディングルール
+
+- `docs/coding-rules/nextjs.md` - Next.js / React
