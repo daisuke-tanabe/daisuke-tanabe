@@ -11,7 +11,7 @@ export type ImageProps = Extendable<
   }
 >;
 
-export default function Image({ src, alt, ...props }: ImageProps) {
+export function Image({ src, alt, ...props }: ImageProps) {
   const url = src ? `${process.env.NEXT_PUBLIC_CDN_URL}${src}` : undefined;
 
   return <img src={url} alt={alt} {...props} />;

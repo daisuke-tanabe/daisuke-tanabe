@@ -4,7 +4,7 @@ import { format } from '@formkit/tempo';
 import { useRouter } from 'next/navigation';
 import { type ReactNode } from 'react';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/primitives';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui';
 
 type PageProps = {
   children: ReactNode;

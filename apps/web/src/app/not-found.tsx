@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 import NextLink from 'next/link';
 
-import { Button } from '@/components/primitives';
+import { Button } from '@/components/ui';
 
 export const metadata: Metadata = {
   title: 'Not Found',

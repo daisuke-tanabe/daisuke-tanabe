@@ -1,8 +1,7 @@
 import NextLink from 'next/link';
 import { type ReactNode } from 'react';
 
-import { ModeToggle } from './ModeToggle.client';
-import { Navigation } from './Navigation.client';
+import { ModeToggle, Navigation } from './components';
 
 type AppShellProps = {
   children: ReactNode;

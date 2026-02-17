@@ -9,7 +9,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/primitives';
+} from '@/components/ui';
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();

@@ -5,7 +5,7 @@ import { type Metadata } from 'next';
 import { Lato, Zen_Kaku_Gothic_New } from 'next/font/google';
 import { type ReactNode } from 'react';
 
-import { AppShell } from '@/app/_features/AppShell';
+import { AppShell } from '@/app/_features/app-shell';
 import { ThemeProvider } from '@/app/_providers';
 
 const zenKakuGothicNew = Zen_Kaku_Gothic_New({

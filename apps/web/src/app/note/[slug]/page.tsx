@@ -1,12 +1,8 @@
 import fs from 'node:fs';
 
-import parse, { type DOMNode, domToReact, Element, type HTMLReactParserOptions } from 'html-react-parser';
-import DOMPurify from 'isomorphic-dompurify';
-import NextLink from 'next/link';
 import path from 'path';
-import React, { type CSSProperties } from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+import { NoteDetail } from '@/app/note/[slug]/_features/note-detail';
 
 type Post = {
   title: string;
@@ -34,53 +30,8 @@ export function generateStaticParams() {
   }));
 }
 
-const options: HTMLReactParserOptions = {
-  replace(domNode, index) {
-    if (domNode instanceof Element && domNode.attribs && domNode.name === 'a') {
-      if (domNode.attribs.href.startsWith('/')) {
-        return (
-          <NextLink key={index} href={domNode.attribs.href}>
-            {domToReact((domNode.children as DOMNode[]) ?? [])}
-          </NextLink>
-        );
-      } else {
-        return (
-          <a key={index} href={domNode.attribs.href} target="_blank">
-            {domToReact((domNode.children as DOMNode[]) ?? [])}
-          </a>
-        );
-      }
-    }
-
-    if (domNode instanceof Element && domNode.attribs && domNode.name === 'pre') {
-      const codeBlockElement = domNode.children[0];
-      if (codeBlockElement instanceof Element && codeBlockElement.attribs && codeBlockElement.name === 'code') {
-        const language = codeBlockElement.attribs.class.match(/(?<=language-)\w+/g)?.at(0);
-        if ('data' in codeBlockElement.children[0] && typeof codeBlockElement.children[0].data === 'string') {
-          return (
-            <SyntaxHighlighter language={language} style={a11yDark as { [p: string]: CSSProperties }}>
-              {codeBlockElement.children[0].data}
-            </SyntaxHighlighter>
-          );
-        }
-      }
-    }
-  },
-};
-
 export default async function Page({ params }: { params: Promise<Post> }) {
   const { slug } = await params;
 
-  const filePath = path.join(process.cwd(), 'data/json', `${slug}.json`);
-  const result = fs.readFileSync(filePath, 'utf-8');
-  const data = JSON.parse(result) as Post;
-
-  const sanitizedHtml = DOMPurify.sanitize(data.content);
-
-  return (
-    <>
-      <h1 className="text-2xl leading-[1.6]">{data.title}</h1>
-      <div className="markdown-content">{parse(sanitizedHtml, options)}</div>
-    </>
-  );
+  return <NoteDetail slug={slug} />;
 }
