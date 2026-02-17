@@ -100,7 +100,7 @@ resource "aws_cloudfront_cache_policy" "daisuke_tanabe_web_default_cache_policy"
 
   min_ttl     = 0
   max_ttl     = 31536000
-  default_ttl = 86400
+  default_ttl = 300
 
   parameters_in_cache_key_and_forwarded_to_origin {
     headers_config {
