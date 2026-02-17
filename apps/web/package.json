@@ -44,7 +44,7 @@
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "jsdom": "26.1.0",
-    "tsx": "4.20.6",
+    "tsx": "4.21.0",
     "vitest": "3.2.4"
   }
 }
