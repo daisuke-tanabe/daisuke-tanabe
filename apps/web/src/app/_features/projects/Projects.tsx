@@ -23,6 +23,7 @@ export async function Projects() {
     headers: {
       'X-MICROCMS-API-KEY': process.env.X_MICROCMS_API_KEY,
     },
+    next: { revalidate: 3600 },
   });
   const { contents: projects } = (await response.json()) as ProjectsResponse;
 

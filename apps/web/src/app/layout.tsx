@@ -32,8 +32,6 @@ export const metadata: Metadata = {
   description: 'Daisuke Tanabe のポートフォリオサイトのホームページです。',
 };
 
-export const dynamic = 'force-dynamic';
-
 type RootLayoutProps = {
   children: ReactNode;
 };
