@@ -1,6 +1,6 @@
 import { BlockSection, BlockSectionTitle, EntryList, EntryListItem } from '@/app/_components';
 
-type WorksResponse = {
+type ProjectsResponse = {
   contents: {
     createdAt: string;
     description: string;
@@ -18,19 +18,19 @@ type WorksResponse = {
   totalCount: number;
 };
 
-export async function WorkExperience() {
+export async function Projects() {
   const response = await fetch('https://daisuke-tanabe.microcms.io/api/v1/projects', {
     headers: {
       'X-MICROCMS-API-KEY': process.env.X_MICROCMS_API_KEY,
     },
   });
-  const { contents: works } = (await response.json()) as WorksResponse;
+  const { contents: projects } = (await response.json()) as ProjectsResponse;
 
   return (
     <BlockSection>
-      <BlockSectionTitle>Work Experience</BlockSectionTitle>
+      <BlockSectionTitle>Projects</BlockSectionTitle>
       <EntryList>
-        {works.map(({ description, startYear, endYear, skills, title, id }) => (
+        {projects.map(({ description, startYear, endYear, skills, title, id }) => (
           <EntryListItem key={id} description={description} label={`${startYear} — ${endYear}`} tags={skills} title={title} />
         ))}
       </EntryList>
