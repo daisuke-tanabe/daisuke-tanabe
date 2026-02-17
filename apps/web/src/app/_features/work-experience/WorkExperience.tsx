@@ -19,7 +19,7 @@ type WorksResponse = {
 };
 
 export async function WorkExperience() {
-  const response = await fetch('https://daisuke-tanabe.microcms.io/api/v1/works', {
+  const response = await fetch('https://daisuke-tanabe.microcms.io/api/v1/projects', {
     headers: {
       'X-MICROCMS-API-KEY': process.env.X_MICROCMS_API_KEY,
     },
