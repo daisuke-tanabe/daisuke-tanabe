@@ -6,9 +6,9 @@
     "./next-js": "./next.mjs"
   },
   "devDependencies": {
-    "eslint-config-next": "16.0.7",
+    "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-simple-import-sort": "12.1.1",
-    "eslint-plugin-turbo": "2.6.1"
+    "eslint-plugin-turbo": "2.8.9"
   }
 }
