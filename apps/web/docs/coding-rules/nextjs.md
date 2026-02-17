@@ -1,8 +1,6 @@
 # Next.js ルール（必須）
 
-App Router における Server / Client 境界とデータ取得の規約。
-Web はフロントエンド専念（RSC + Client Component + API クライアント）。
-データ操作は全て `apps/api`（Hono）が担当する。
+App Router における Server / Client 境界の規約。
 
 ## レイヤー設計
 
@@ -11,10 +9,9 @@ Web はフロントエンド専念（RSC + Client Component + API クライア�
 | `app/`        | ルーティング、レイアウトのみ             |
 | `components/` | 表示ロジック                             |
 | `hooks/`      | アプリ全体で共有するクライアント hooks   |
-| `lib/`        | API クライアント + ユーティリティ        |
+| `lib/`        | ユーティリティ                           |
 
-依存の方向: `app/ → components/ → lib/api/server` or `lib/api/{domain}`
-共有型・定数は `@index-vault/shared` から import。
+依存の方向: `app/ → components/ → lib/`
 
 ## 1. Server / Client 分離
 
@@ -122,169 +119,30 @@ export default async function Page() {
 }
 ```
 
-## 5. データ取得と API クライアント
-
-### アーキテクチャ
-
-```
-RSC → lib/api/server.ts (Hono RPC) → Hono API（直接）
-Client → lib/api/{domain}.ts (Hono RPC) → /api/* Route Handler (BFF) → Hono API（プロキシ）
-```
-
-- RSC 用 (`lib/api/server.ts`) と Client 用 (`lib/api/{domain}.ts`) は完全に分離
-- Client Component はトークンを直接扱わない（BFF が認証を処理）
-- 共有エラークラスは `lib/api/errors.ts` に配置
-- 両方とも `hc<AppType>()` による Hono RPC で型安全
-
-### RSC からのデータ取得
-
-- データを**使う Server Component 自身**が `lib/api/server` 経由で取得する
-- `page.tsx` ではデータ取得しない（構成のみ）
-- `createServerRpc()` で認証付き RPC クライアントを生成（内部で `auth().getToken()` を呼ぶ）
-- `import 'server-only'` により Client Component からの誤 import を防止
-- 環境変数: `process.env.API_URL`（`NEXT_PUBLIC_` 不要）
-
-```tsx
-// Server Component
-import { createServerRpc } from '@/lib/api/server';
-
-const rpc = await createServerRpc();
-const res = await rpc.api.tickers.$get();
-const { data: tickers } = await res.json();
-```
-
-### Client からの API 呼び出し
-
-- ドメイン分割 RPC モジュール（`lib/api/{domain}.ts`）経由で Route Handler（BFF）を叩く
-- トークン不要（BFF がサーバー側で処理）
-- ミューテーション後は `router.refresh()` で RSC を再描画
-- パスは Hono RPC が自動生成
-
-```tsx
-// Client Component
-'use client';
-import { tickersApi } from '@/lib/api/tickers';
-import { watchlistApi } from '@/lib/api/watchlist';
-
-// GET
-const items = await tickersApi.suggested();
-
-// Mutation
-await watchlistApi.add(tickerId);
-await watchlistApi.remove(tickerId);
-```
-
-### パス規約
-
-| クライアント | パスの書き方 | 理由 |
-|---|---|---|
-| `lib/api/server.ts` | Hono RPC 自動生成 | `hc<AppType>(API_BASE_URL)` |
-| `lib/api/{domain}.ts` | Hono RPC 自動生成 | `hc<AppType>('')` → BFF プロキシ経由 |
-
-### ポーリング
-
-- Client Component からドメインモジュール経由で定期取得
-- ポーリング間隔は `lib/constants.ts` の `POLLING_INTERVAL_MS` を使用
-
-### 整形の責務
-
-- データの整形は API サーバー側の責務
-- Web は API レスポンスをそのまま表示する
-- Client Component を計算器にしない
-
-### API クライアントの規約
-
-- RSC からは `lib/api/server` の `createServerRpc()` を使用（Hono RPC）
-- Client Component からはドメイン分割モジュールを使用（`tickersApi`, `watchlistApi`, `marketSummaryApi`）
-- RPC の共有基盤は `lib/api/rpc.ts`（`hc<AppType>('')` + `unwrap` ヘルパー）
-- `lib/index.ts` のバレルは作らない（個別ファイルへの直接 import）
-
-## 6. Props 境界と型の方針
+## 5. Props 境界と型の方針
 
 - Client には**表示用の最小データのみ**渡す
 - `Date` / `Map` / `Set` / class instance / 関数を渡さない
 - `Date` は ISO 文字列に変換して渡す
-- DTO を共有パッケージで共有しない。API 側は型推論、コンポーネント側は Props にローカル定義
 - 同一 feature 内で複数ファイルが同じ型を使う場合は feature ルートの `types.ts` に定義
 - 構造的型付けにより、RSC → Client Component の props 受け渡し時に TypeScript が不整合を検出する
 
-### API レスポンス型（Dto）
-
-API 境界の入出力契約を表す型には `Dto` サフィックスを付ける。
-
-| 規約 | 例 |
-|---|---|
-| 配置先 | `lib/api/dto.ts` |
-| API レスポンス型 | `TickerDto`, `MarketSummaryDto` |
-| Dto から導出したユーティリティ型 | `ChangeRate`（サフィックス不要） |
-
-- `InferResponseType` で API 定義から自動導出し、手書きの二重定義を避ける
-- Dto はコンポーネントの Props 型としてそのまま使用してよい（Props 境界での再定義は不要）
-
-## 7. スコープと lib/ の構造
+## 6. スコープと lib/ の構造
 
 ### スコープの棲み分け
 
 | 配置                         | スコープ                               | 例                                 |
 | ---------------------------- | -------------------------------------- | ---------------------------------- |
 | `src/hooks/`                 | アプリ全体で共有するクライアント hooks | `use-debounce.ts`, `use-mobile.ts` |
-| `src/lib/`                   | アプリ全体で共有                       | `api/server.ts`, `api/rpc.ts`, `api/tickers.ts`, `constants.ts`, `utils.ts` |
-| `app/(auth)/_lib/`           | そのルートグループ内のみ               | ルートグループ固有のユーティリティ |
-| `app/(auth)/dashboard/_lib/` | そのルートのみ                         | ルート固有のユーティリティ         |
+| `src/lib/`                   | アプリ全体で共有                       | `constants.ts`, `utils.ts`         |
+| `app/(group)/_lib/`          | そのルートグループ内のみ               | ルートグループ固有のユーティリティ |
+| `app/(group)/route/_lib/`    | そのルートのみ                         | ルート固有のユーティリティ         |
 | `_features/xxx/lib/`         | その Feature 内のみ                    | Feature 固有のロジック             |
 
 同様に `_hooks/` もスコープの原則は同じ。
 
-### ディレクトリ構成
+### ルール
 
-```
-src/lib/
-├── api/
-│   ├── server.ts         # RSC 専用 RPC クライアント（server-only, hc + auth）
-│   ├── rpc.ts            # Client 用 RPC 共有基盤（hc<AppType>('') + unwrap）
-│   ├── dto.ts            # API レスポンス型（Dto）
-│   ├── tickers.ts        # tickersApi（Client Component 用）
-│   ├── watchlist.ts      # watchlistApi（Client Component 用）
-│   ├── market-summary.ts # marketSummaryApi（Client Component 用）
-│   └── errors.ts         # 共有エラークラス（ApiClientError）
-├── constants.ts          # アプリ共通の定数
-└── utils.ts              # shadcn 規約で固定（components.json で参照）
-```
-
-### import ルール
-
-```ts
-import { createServerRpc } from '@/lib/api/server';  // RSC
-import { tickersApi } from '@/lib/api/tickers';       // Client Component
-import { watchlistApi } from '@/lib/api/watchlist';   // Client Component
-import { POLLING_INTERVAL_MS } from '@/lib/constants';
-import { cn } from '@/lib/utils';
-```
-
-- `lib/index.ts` のバレルは作らない
-- 常に個別ファイルへの直接 import を使う
-
-### lib/ 直下 — Shared ユーティリティ
-
-- Server / Client どちらからも使える純粋関数・定数
-- `lib/utils.ts` はファイル位置をそのまま維持
-- `components.json` の `aliases.utils` は `"@/lib/utils"` に設定
-
-## 8. 共有型・定数（`@index-vault/shared`）
-
-ドメイン型・定数・ブランデッド型は `@index-vault/shared` から import する。
-`@/` パスは Web 固有のコードのみに使用する。
-DTO は共有しない（API 側は推論、コンポーネント側は Props にローカル定義）。
-
-### import ルール
-
-```ts
-// 共有パッケージ（ドメイン型・定数・ブランデッド型）
-import { PERIODS, PERIOD_LABELS, type Period } from '@index-vault/shared';
-import type { ISO8601String } from '@index-vault/shared';
-
-// Web 固有
-import { createServerRpc } from '@/lib/api/server';
-import { tickersApi } from '@/lib/api/tickers';
-import { cn } from '@/lib/utils';
-```
+- `lib/index.ts` のバレルは作らない（個別ファイルへの直接 import）
+- `lib/utils.ts` はファイル位置をそのまま維持（`components.json` の `aliases.utils` が `"@/lib/utils"` を参照）
+- Server / Client どちらからも使える純粋関数・定数は `src/lib/` に配置
