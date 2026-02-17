@@ -36,16 +36,14 @@ export const dynamic = 'force-dynamic';
 
 type RootLayoutProps = {
   children: ReactNode;
-  modal: ReactNode;
 };
 
-export default function Layout({ children, modal }: RootLayoutProps) {
+export default function Layout({ children }: RootLayoutProps) {
   return (
     <html lang="ja" suppressHydrationWarning>
       <body className={`${zenKakuGothicNew.variable} ${lato.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <AppShell>{children}</AppShell>
-          {modal}
         </ThemeProvider>
       </body>
       <GoogleAnalytics gaId="G-7LH0P8DBP9" />
