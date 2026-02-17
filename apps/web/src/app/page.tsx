@@ -7,33 +7,6 @@ import {
   LeadText,
 } from '@/app/_components';
 
-const workExperienceData = [
-  {
-    description: 'フロントエンド開発',
-    label: '2023 — Now',
-    tags: ['Next.js', 'TypeScript', 'Lit', 'MUI', 'Node.js', 'Vite', 'Turborepo', 'Docker', 'AWS'],
-    title: 'Saasの新規開発',
-  },
-  {
-    description: 'フロントエンド開発',
-    label: '2022 — 2023',
-    tags: ['Next.js', 'TypeScript', 'MUI', 'Node.js', 'GraphQL', 'Turborepo', 'Vercel', 'AWS'],
-    title: 'BtoC向け新規サービスのプロトタイプ開発',
-  },
-  {
-    description: 'フロントエンド開発',
-    label: '2016 — 2022',
-    tags: ['JavaScript', 'Sass', 'jQuery', 'Node.js', 'React', 'Vue.js', 'Gulp', 'Webpack'],
-    title: 'HRサービスの開発',
-  },
-  {
-    description: '制作及び開発、保守、運用',
-    label: '2012 — 2016',
-    tags: ['JavaScript', 'Sass', 'jQuery', 'Angular', 'Node.js', 'PHP', 'WordPress', 'MySQL', 'Gulp'],
-    title: 'Web制作/開発',
-  },
-];
-
 const outputData = [
   {
     description: 'ポートフォリオサイト',
@@ -58,7 +31,32 @@ const outputData = [
   },
 ];
 
-export default function Page() {
+type WorksResponse = {
+  contents: {
+    createdAt: string;
+    description: string;
+    endYear: string;
+    id: string;
+    publishedAt: string;
+    revisedAt: string;
+    skills: string[];
+    startYear: string;
+    title: string;
+    updatedAt: string;
+  }[];
+  limit: number;
+  offset: number;
+  totalCount: number;
+};
+
+export default async function Page() {
+  const response = await fetch('https://daisuke-tanabe.microcms.io/api/v1/works', {
+    headers: {
+      'X-MICROCMS-API-KEY': process.env.X_MICROCMS_API_KEY,
+    },
+  });
+  const { contents: works } = (await response.json()) as WorksResponse;
+
   return (
     <BlockSectionGroup>
       <BlockSection>
@@ -71,8 +69,8 @@ export default function Page() {
       <BlockSection>
         <BlockSectionTitle>Work Experience</BlockSectionTitle>
         <EntryList>
-          {workExperienceData.map(({ description, label, tags, title }, index) => (
-            <EntryListItem key={index} description={description} label={label} tags={tags} title={title} />
+          {works.map(({ description, startYear, endYear, skills, title, id }) => (
+            <EntryListItem key={id} description={description} label={`${startYear} — ${endYear}`} tags={skills} title={title} />
           ))}
         </EntryList>
       </BlockSection>

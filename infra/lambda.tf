@@ -15,6 +15,12 @@ resource "aws_lambda_function" "daisuke_tanabe_lambda" {
   role                           = aws_iam_role.daisuke_tanabe_role.arn
   timeout                        = "10"
 
+  environment {
+    variables = {
+      X_MICROCMS_API_KEY = var.x_microcms_api_key
+    }
+  }
+
   ephemeral_storage {
     size = "512"
   }

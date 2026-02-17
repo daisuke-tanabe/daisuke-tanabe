@@ -18,3 +18,5 @@ variable "github_repo" {
 variable "acm_certificate_id" {
   description = "ACM certificate ID for CloudFront"
 }
+
+variable "x_microcms_api_key" {}
