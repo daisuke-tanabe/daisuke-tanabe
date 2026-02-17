@@ -24,7 +24,7 @@ describe('createTupleSchema 関数', () => {
       const result = schema.safeParse(['Test', 'Not a number']);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Expected number, received string');
+        expect(result.error.issues[0].message).toBe('Invalid input: expected number, received string');
       }
     });
 
@@ -33,7 +33,7 @@ describe('createTupleSchema 関数', () => {
       const result = schema.safeParse(['Test']);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Array must contain at least 2 element(s)');
+        expect(result.error.issues[0].message).toBe('Invalid input: expected number, received undefined');
       }
     });
 
@@ -42,7 +42,7 @@ describe('createTupleSchema 関数', () => {
       const result = schema.safeParse([]);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe('Array must contain at least 1 element(s)');
+        expect(result.error.issues[0].message).toBe('Invalid input: expected string, received undefined');
       }
     });
   });
