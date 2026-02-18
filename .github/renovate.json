@@ -1,5 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>daisuke-tanabe/renovate-config"],
-  "baseBranchPatterns": ["main"]
+  "baseBranchPatterns": ["main"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "description": "All patch updates are automatically merged"
+    }
+  ]
 }
