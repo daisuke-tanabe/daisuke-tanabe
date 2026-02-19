@@ -22,7 +22,7 @@ COPY packages/typescript-config/package.json ./packages/typescript-config/
 COPY apps/web/package.json ./apps/web/
 
 # Turbo をインストール
-RUN pnpm add -g turbo@2.8.9
+RUN pnpm add -g turbo@2.8.10
 
 # ソースコードをコピー（最後に）
 COPY packages/ ./packages/
