@@ -1,4 +1,12 @@
-# CLAUDE.md
+# web アプリ
+
+Next.js アプリケーション。
+
+## コマンド
+
+- `pnpm dev` — 開発サーバー起動
+- `pnpm build` — プロダクションビルド
+- `pnpm test` — Vitest でテスト実行
 
 ## 参考ドキュメント
 
