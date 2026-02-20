@@ -50,7 +50,7 @@ jobs:
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
+          secrets: |
             X_MICROCMS_API_KEY=${{ secrets.X_MICROCMS_API_KEY }}
 
       - name: Extract static files and push to ECR

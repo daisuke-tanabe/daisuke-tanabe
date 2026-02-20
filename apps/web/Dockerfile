@@ -39,9 +39,8 @@ COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install --frozen-lockfile
 COPY --from=builder /app/out/full/ .
 
-ARG X_MICROCMS_API_KEY
-ENV X_MICROCMS_API_KEY=${X_MICROCMS_API_KEY}
-RUN pnpm turbo run build --filter=web...
+RUN --mount=type=secret,id=X_MICROCMS_API_KEY,env=X_MICROCMS_API_KEY \
+    pnpm turbo run build --filter=web...
 
 
 FROM installer AS prod
