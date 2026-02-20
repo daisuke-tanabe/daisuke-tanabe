@@ -40,6 +40,11 @@ RUN pnpm install --frozen-lockfile
 COPY --from=builder /app/out/full/ .
 
 RUN --mount=type=secret,id=X_MICROCMS_API_KEY,env=X_MICROCMS_API_KEY \
+    echo "=== DEBUG: API key length: ${#X_MICROCMS_API_KEY}, first 4: ${X_MICROCMS_API_KEY:0:4} ===" && \
+    curl -s -o /dev/null -w "=== DEBUG: microCMS API status: %{http_code} ===" \
+      -H "X-MICROCMS-API-KEY: ${X_MICROCMS_API_KEY}" \
+      "https://daisuke-tanabe.microcms.io/api/v1/projects" && \
+    echo "" && \
     pnpm turbo run build --filter=web...
 
 
