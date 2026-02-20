@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@secretlint/secretlint-rule-preset-recommend": "11.3.1",
-    "eslint": "9.39.2",
+    "eslint": "9.39.3",
     "prettier": "3.8.1",
     "secretlint": "11.3.1",
     "turbo": "2.8.10",
