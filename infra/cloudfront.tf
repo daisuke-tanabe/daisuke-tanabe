@@ -53,6 +53,17 @@ resource "aws_cloudfront_distribution" "daisuke_tanabe_web_cloudfront" {
   }
 
   ordered_cache_behavior {
+    path_pattern     = "/api/*"
+    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.lambda_origin_id
+    # AWS 管理の CachingDisabled ポリシー（キャッシュしない）
+    cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad"
+    origin_request_policy_id = aws_cloudfront_origin_request_policy.daisuke_tanabe_web_default_request_policy.id
+    viewer_protocol_policy   = "redirect-to-https"
+  }
+
+  ordered_cache_behavior {
     path_pattern             = "/_next/static/*"
     allowed_methods          = ["GET", "HEAD", "OPTIONS"]
     cached_methods           = ["GET", "HEAD"]
