@@ -18,6 +18,7 @@ resource "aws_lambda_function" "daisuke_tanabe_lambda" {
   environment {
     variables = {
       X_MICROCMS_API_KEY = var.x_microcms_api_key
+      X_MICROCMS_REVALIDATE_SECRET = var.x_microcms_revalidate_secret
     }
   }
 

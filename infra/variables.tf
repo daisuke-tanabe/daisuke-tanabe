@@ -20,3 +20,5 @@ variable "acm_certificate_id" {
 }
 
 variable "x_microcms_api_key" {}
+
+variable "x_microcms_revalidate_secret" {}
