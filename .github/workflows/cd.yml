@@ -39,7 +39,7 @@ jobs:
           registry: ${{ secrets.AWS_SSO_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Build Next.js with Docker
         uses: docker/build-push-action@v6
