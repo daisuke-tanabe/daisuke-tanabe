@@ -1,5 +1,6 @@
 {
   "language": "japanese",
+  "includeCoAuthoredBy": true,
   "permissions": {
     "allow": [
       "Bash(git add *)",
