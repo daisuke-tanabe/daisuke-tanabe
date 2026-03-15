@@ -11,10 +11,6 @@ const tabsData = [
     label: 'home',
     href: '/',
   },
-  {
-    label: 'note',
-    href: '/note',
-  },
 ];
 
 export function Navigation() {
