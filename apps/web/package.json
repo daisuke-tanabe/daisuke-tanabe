@@ -43,7 +43,7 @@
     "@vitest/coverage-v8": "4.1.0",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "jsdom": "28.1.0",
+    "jsdom": "29.0.0",
     "tsx": "4.21.0",
     "vitest": "4.1.0"
   }
