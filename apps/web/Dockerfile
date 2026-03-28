@@ -44,7 +44,7 @@ RUN --mount=type=secret,id=X_MICROCMS_API_KEY,env=X_MICROCMS_API_KEY \
 
 
 FROM installer AS prod
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.0.0 /lambda-adapter /opt/extensions/lambda-adapter
 ENV PORT=3000
 ENV NODE_ENV=production
 ENV AWS_LWA_ENABLE_COMPRESSION=true
