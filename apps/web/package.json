@@ -45,6 +45,6 @@
     "@workspace/typescript-config": "workspace:*",
     "jsdom": "29.0.2",
     "tsx": "4.21.0",
-    "vitest": "4.1.6"
+    "vitest": "4.1.11"
   }
 }
