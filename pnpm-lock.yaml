@@ -30,8 +30,8 @@ importers:
   apps/web:
     dependencies:
       '@formkit/tempo':
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.3.0
+        version: 1.3.0
       '@next/third-parties':
         specifier: 16.2.6
         version: 16.2.6(next@16.2.11(babel-plugin-react-compiler@19.0.0-beta-ebf51a3-20250411)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6)
@@ -673,8 +673,8 @@ packages:
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
-  '@formkit/tempo@1.0.0':
-    resolution: {integrity: sha512-2jhR8jnWFt4ajtbpHL2ZvJJ+ofj/XpAumb1OLmsY7U5iwCjGKuk0wqLR7dGsZfyvJeivfWLD9vzj9cdkUUWzyg==}
+  '@formkit/tempo@1.3.0':
+    resolution: {integrity: sha512-1Eeo4T3Tvvdq9j8viIRsk1ihr0HVx0IKiiP8s3ZsSHUFP+aZLYF8et18bVLClU5T2KhORPrr9aJkgNC/u10I2g==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1402,6 +1402,7 @@ packages:
   '@secretlint/secretlint-rule-preset-recommend@11.6.0':
     resolution: {integrity: sha512-yEC93K7WWOYN3WBOs7/LwwtsX3LijNKVsR92+Aar3grqM/QfqBZBQQm06sU+gpg/HC9ndn0sd3ljrZe6jcPzcg==}
     engines: {node: '>=20.0.0'}
+    deprecated: Built into secretlint v14 and later. Remove this package; the rule id still works. https://github.com/secretlint/secretlint/blob/HEAD/docs/rules/preset-recommend.md
 
   '@secretlint/source-creator@11.6.0':
     resolution: {integrity: sha512-iBm5/UOrT8WAc5/uzdNdOMU4hVbkkESr9O/OEmKnONhjjy4AVKd+6H50o3C/uJZVR9KQrixqs3qgDkSgCb4ebQ==}
@@ -4078,7 +4079,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@formkit/tempo@1.0.0': {}
+  '@formkit/tempo@1.3.0': {}
 
   '@humanfs/core@0.19.1': {}
 
